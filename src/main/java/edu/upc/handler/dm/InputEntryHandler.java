@@ -65,10 +65,9 @@ public class InputEntryHandler {
 		return inputEntries;
 	}
 
-	private InputEntry_Rule getInputEntryFromAction(String resultActionToken, Input_Dmn input, Tree tNegation)
-			throws IOException {
+	private Input_Dmn findInput(String resultActionToken) {
+		Input_Dmn input = null;
 		Agent agent = activitiesList.get(resultActionToken).getAgent();
-		Boolean a1AsAgentFound = false;
 		String agentToken = null;
 		// Agent (A0) inside condition will be the input (Header of Table)
 		if (agent != null) {
@@ -76,56 +75,60 @@ public class InputEntryHandler {
 
 		} else {
 			if (activitiesList.get(resultActionToken).getPatient() != null) {
-				agentToken = activitiesList.get(resultActionToken).getPatient().getId();
-				if (tokens.get(agentToken).getFunction().equals("SBJ")) {
-					a1AsAgentFound = true;
+				if (tokens.get(activitiesList.get(resultActionToken).getPatient().getId()).getFunction()
+						.equals("SBJ")) {
+					agentToken = activitiesList.get(resultActionToken).getPatient().getId();
 				}
 			}
 		}
-		InputEntry_Rule inputEntry = null;
 		if (agentToken != null) {
 			String agentName = functions.getInputDataName(agentToken);
 			if (agentName != null)
 				input = new Input_Dmn(agentToken, agentName, agentName.replaceAll("[^A-Za-z0-9]", "").toLowerCase(),
 						functions.getType());
+		}
+		return input;
+	}
 
-			Patient patient = activitiesList.get(resultActionToken).getPatient();
-			Predicate predicate = predicates.get(resultActionToken);
-			Boolean a2Found = false;
-			// Find Agent (A1,A2,AM-LOC) within condition that will be the INPUTENTRY result
-			String patientName = null;
-			for (Entry<String, PredicateArgument> argument : predicate.getA1PlusArguments().entrySet()) {
-				if (DmnFreelingUtils.argumentDifferentToA1(predicate, argument, tokens)) {
-					Boolean negation = DmnFreelingUtils.isNegation(resultActionToken, trees);
-					if (tNegation != null)
-						negation = true;
-					if (input == null)
-						input = getInputFromInputEntryNull(argument.getKey());
-
-					patientName = functions.getEntryName(argument.getKey());
-					if (input != null)
+	private InputEntry_Rule getInputEntryFromAction(String resultActionToken, Input_Dmn input, Tree tNegation)
+			throws IOException {
+		Boolean negation = DmnFreelingUtils.isNegation(resultActionToken, trees);
+		if (tNegation != null)
+			negation = true;
+		if (input == null) {
+			input = findInput(resultActionToken);
+		}
+		InputEntry_Rule inputEntry = null;
+		// if (input != null) {
+		Patient patient = activitiesList.get(resultActionToken).getPatient();
+		Predicate predicate = predicates.get(resultActionToken);
+		Boolean a2Found = false;
+		// Find Agent (A1,A2,AM-LOC) within condition that will be the INPUTENTRY result
+		String patientName = null;
+		for (Entry<String, PredicateArgument> argument : predicate.getA1PlusArguments().entrySet()) {
+			if (DmnFreelingUtils.argumentDifferentToA1(predicate, argument, tokens)) {
+				if (input == null)
+					input = getInputFromInputEntryNull(argument.getKey());
+				patientName = functions.getEntryName(argument.getKey());
+				if (input != null)
+					input.setTypeRef(functions.getType());
+				inputEntry = new InputEntry_Rule(argument.getKey(), patientName, input, negation);
+				a2Found = true;
+				break;
+			} else if (predicate.getA1PlusArguments().get(argument.getKey()).getRole().equals("A1")) {
+				if (input != null) {
+					String agentName = functions.getInputDataName(argument.getKey());
+					if (!input.getName().toLowerCase().equals(agentName.toLowerCase())) {
+						patientName = functions.getEntryName(patient.getId()); //patient.getCompleteText().trim(); // functions.getTextFromNode(patient.getId());
+						// if (input != null)
 						input.setTypeRef(functions.getType());
-					inputEntry = new InputEntry_Rule(argument.getKey(), patientName, input, negation);
-					a2Found = true;
-					break;
-				} else if (predicate.getA1PlusArguments().get(argument.getKey()).getRole().equals("A1")) {
-					if (!a1AsAgentFound) {
-						Boolean negation = DmnFreelingUtils.isNegation(resultActionToken, trees);
-						if (tNegation != null)
-							negation = true;
-						if (input == null)
-							input = getInputFromInputEntryNull(argument.getKey());
-						patientName = patient.getCompleteText().trim(); // functions.getTextFromNode(patient.getId());
-						if (input != null)
-							input.setTypeRef(functions.getType());
 						inputEntry = new InputEntry_Rule(patient.getId(), patientName, input, negation);
 						a2Found = true;
 						break;
 					} else {
 						PredicateArgument arg = DmnFreelingUtils.getSecondA1(predicate, argument.getKey(), tokens);
-
 						if (arg != null) {
-							Boolean negation = DmnFreelingUtils.isNegation(arg.getHead_token(), trees);
+							negation = DmnFreelingUtils.isNegation(arg.getHead_token(), trees);
 							if (tNegation != null)
 								negation = true;
 							patientName = functions.getEntryName(arg.getHead_token());
@@ -138,27 +141,28 @@ public class InputEntryHandler {
 					}
 				}
 			}
-			if (!a2Found || patientName == null) {
-				Boolean negation = DmnFreelingUtils.isNegation(resultActionToken, trees);
-				if (tNegation != null)
-					negation = true;
-				String id = tokens.get(resultActionToken).getId();
-				patientName = tokens.get(resultActionToken).getLemma();
-				if (patientName.equals("be")) {
-					patientName = functions.getEntryName(patient.getId());
-					if (input != null)
-						input.setTypeRef(functions.getType());
-				}
-				inputEntry = new InputEntry_Rule(id, patientName, input, negation);
-			}
-		} else {
-			// return the action
-			String name = tokens.get(resultActionToken).getLemma();
-			Boolean negation = DmnFreelingUtils.isNegation(resultActionToken, trees);
-			if (tNegation != null)
-				negation = true;
-			inputEntry = new InputEntry_Rule(resultActionToken, name, null, negation);
 		}
+		if (!a2Found || patientName == null) {
+			String id = tokens.get(resultActionToken).getId();
+			patientName = tokens.get(resultActionToken).getLemma();
+			if (patientName.equals("be")) {
+				patientName = functions.getEntryName(patient.getId());
+				if (input != null)
+					input.setTypeRef(functions.getType());
+			}
+			inputEntry = new InputEntry_Rule(id, patientName, input, negation);
+		}
+		if (input != null) {
+			if (input.getName().toLowerCase().trim().contains(inputEntry.getText().toLowerCase().trim())) {
+				inputEntry.setText("true");
+				input.setTypeRef(TypeRef_Table.BOOLEAN);
+			}
+		}
+		/*
+		 * } else { // return the action String name =
+		 * tokens.get(resultActionToken).getLemma(); input = null; inputEntry = new
+		 * InputEntry_Rule(resultActionToken, name, input, negation); }
+		 */
 		return inputEntry;
 	}
 

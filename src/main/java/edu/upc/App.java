@@ -16,7 +16,8 @@ public class App {
 
 	static String lang = "en";
 
-	private static File textFolder = new File("/home/luis/doc2dmnutils/" + lang + "/input/texts");
+	private static File textFolder = new File(
+			System.getProperty("user.home") + "/doc2dmnutils/" + lang + "/input/texts");
 	private static File treeFolder;
 
 	public static void main(String[] args) throws ParseException, IOException {
@@ -54,7 +55,7 @@ public class App {
 
 		}
 
-		System.out.println("freeling4dmn DONE!");
+		System.out.println("DMExtractor DONE!");
 
 	}
 }

@@ -3,8 +3,7 @@ package edu.upc.freelingutils.dm;
 public enum TypeRef_Table {
 	STRING("string"), 
 	BOOLEAN("boolean"), 
-	INTEGER("integer"),
-	DOUBLE("double");
+	NUMERIC("double");
 
 	private final String description;
 

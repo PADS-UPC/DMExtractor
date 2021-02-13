@@ -95,11 +95,11 @@ public class Functions {
 			if (numbers != null) {
 				if (numbers.length == 1) {
 					text = ">" + numbers[0];
-					type = TypeRef_Table.DOUBLE;
+					type = TypeRef_Table.NUMERIC;
 					return text;
 				} else if (numbers.length == 2) {
 					text = "[" + numbers[0] + ".." + numbers[1] + "]";
-					type = TypeRef_Table.DOUBLE;
+					type = TypeRef_Table.NUMERIC;
 					return text;
 				}
 			}
@@ -109,7 +109,7 @@ public class Functions {
 			if (numbers != null) {
 				if (numbers.length == 1) {
 					text = ">=" + numbers[0];
-					type = TypeRef_Table.DOUBLE;
+					type = TypeRef_Table.NUMERIC;
 					return text;
 				}
 			}
@@ -122,7 +122,7 @@ public class Functions {
 			if (numbers != null) {
 				if (numbers.length == 1) {
 					text = "<" + numbers[0];
-					type = TypeRef_Table.DOUBLE;
+					type = TypeRef_Table.NUMERIC;
 					return text;
 				}
 			}
@@ -132,7 +132,7 @@ public class Functions {
 			if (numbers != null) {
 				if (numbers.length == 1) {
 					text = "<=" + numbers[0];
-					type = TypeRef_Table.DOUBLE;
+					type = TypeRef_Table.NUMERIC;
 					return text;
 				}
 			}
@@ -143,7 +143,7 @@ public class Functions {
 			if (numbers != null) {
 				if (numbers.length == 2) {
 					text = "[" + numbers[0] + ".." + numbers[1] + "]";
-					type = TypeRef_Table.DOUBLE;
+					type = TypeRef_Table.NUMERIC;
 					return text;
 				}
 			}
@@ -153,12 +153,12 @@ public class Functions {
 			if (numbers != null) {
 				if (numbers.length == 1) {
 					text = numbers[0];
-					type = TypeRef_Table.DOUBLE;
+					type = TypeRef_Table.NUMERIC;
 					return text;
 				}
 			}
 		} else if (tokens.get(operatorToken).getPos().equals("number")) {
-			type = TypeRef_Table.DOUBLE;
+			type = TypeRef_Table.NUMERIC;
 			String stringWithOrBarFromList = DmnFreelingUtils.joinStringsListWithOrSeparator(greaterOperators);
 			patterns.add("/¦" + operatorToken + "¦/=number1 << (/¦or¦/ << /¦" + stringWithOrBarFromList + "¦/)");
 			patterns.add("/¦" + operatorToken + "¦/=number1 < /¦more¦/ < /¦than¦/");
@@ -188,7 +188,7 @@ public class Functions {
 				if (numbers.length == 2) {
 					text = "[" + numbers[0] + ".." + numbers[1] + "]";
 					text = text.replace("=", "");
-					type = TypeRef_Table.DOUBLE;
+					type = TypeRef_Table.NUMERIC;
 					return text;
 				}
 			}

@@ -13,6 +13,7 @@ import edu.upc.entities.Token;
 import edu.upc.entities.dm.DecisionTable_Dmn;
 import edu.upc.entities.dm.OutputEntry_Rule;
 import edu.upc.freelingutils.dm.DmnFreelingUtils;
+import edu.upc.freelingutils.dm.TypeRef_Table;
 
 public class OutputEntryHandler {
 	private LinkedHashMap<String, Activity> activitiesList;
@@ -73,6 +74,11 @@ public class OutputEntryHandler {
 			Boolean negation = DmnFreelingUtils.isNegation(decisionActionToken, trees);
 			outputEntry = new OutputEntry_Rule(decisionActionToken, text, negation);
 		}
+		if (decisionTable.getName().toLowerCase().trim().contains(outputEntry.getText().toLowerCase().trim())) {
+			outputEntry.setText("true");
+			decisionTable.getOutput().setTypeRef(TypeRef_Table.BOOLEAN);
+		}
+
 		return outputEntry;
 	}
 }

@@ -109,7 +109,7 @@ public class RulesHandler {
 							inputEntries = new LinkedHashMap<String, InputEntry_Rule>();
 						} else if (inputEntries != null) {
 							decisionTable = decisionTableList.entrySet().iterator().next().getValue();
-							// TODO find Input name inside Table
+							// Find Input name inside Table
 							Boolean found = false;
 							DecisionTable_Dmn decisionTableTmp = null;
 							for (Entry<String, InputEntry_Rule> inputEntry : inputEntries.entrySet()) {
@@ -149,8 +149,9 @@ public class RulesHandler {
 											String name = inputEntry.getValue().getText();
 											Input_Dmn input = new Input_Dmn(inputEntry.getKey(), name,
 													name.replaceAll("[^A-Za-z0-9]", "").toLowerCase(),
-													TypeRef_Table.STRING);
+													TypeRef_Table.BOOLEAN);
 											inputEntry.getValue().setInput(input);
+											inputEntry.getValue().setText("true");
 
 											decisionTable = findDecisionTableWithName(
 													inputData.getValue().getDecision());
@@ -270,10 +271,8 @@ public class RulesHandler {
 	private Decision_Dmn createDecision(String decisionActionToken) {
 		String decisionToken = null;
 		Decision_Dmn decision = null;
-		Boolean agentFound = false;
 		if (activitiesList.get(decisionActionToken).getAgent() != null) {
 			decisionToken = activitiesList.get(decisionActionToken).getAgent().getId();
-			agentFound = true;
 		}
 		if (activitiesList.get(decisionActionToken).getPatient() != null && decisionToken == null) {
 			if (tokens.get(activitiesList.get(decisionActionToken).getPatient().getId()).getFunction().equals("SBJ")) {
@@ -282,14 +281,15 @@ public class RulesHandler {
 		}
 
 		if (decisionToken != null) {
-			String name = functions.getEntryName(decisionToken);
+			String name = functions.getInputDataName(decisionToken);
 			// Necessary?---
 			if (name == null)
-				name = "";
-			if (!agentFound && activitiesList.get(decisionActionToken).getPatient() != null)
-				name = tokens.get(decisionActionToken).getLemma() + " " + name;
-			else
-				name = name + " " + tokens.get(decisionActionToken).getLemma();
+				name = tokens.get(decisionActionToken).getLemma();
+			// if (!agentFound && activitiesList.get(decisionActionToken).getPatient() !=
+			// null)
+			// name = tokens.get(decisionActionToken).getLemma() + " " + name;
+			// else
+			// name = name + " " + tokens.get(decisionActionToken).getLemma();
 			// -----
 			DrgElement drgElement = new DrgElement(decisionToken, name, ActionType.DECISION);
 			decision = new Decision_Dmn(decisionToken, drgElement, activitiesList.get(decisionActionToken).getAction());
