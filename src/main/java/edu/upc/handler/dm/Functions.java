@@ -51,11 +51,11 @@ public class Functions {
 
 		this.setType(TypeRef_Table.STRING);
 		//
-		greaterOperators.addAll(Arrays.asList("great", "more", "high", "above","exceed"));
+		greaterOperators.addAll(Arrays.asList("great", "more", "high", "above", "exceed", "begin"));
 		//
 		lessOperators.addAll(Arrays.asList("less", "fewer"));
 		//
-		//Verbs: exceed, begin, start = >
+		// Verbs: exceed, begin, start = >
 
 	}
 
@@ -85,13 +85,21 @@ public class Functions {
 		ArrayList<String> patterns = new ArrayList<String>();
 		patterns.clear();
 		if (greaterOperators.contains(tokens.get(operatorToken).getLemma())) {
-			patterns.add("/¦number¦/=number1 >> (/¦" + operatorToken + "¦/ !<< /¦and¦|¦or¦/)");
+			patterns.add("/¦number¦.*¦.*¦/=number1 >> (/¦" + operatorToken + "¦/ !<< /¦and¦|¦or¦/)");
 			String lessOperatorsCombinated = DmnFreelingUtils.joinStringsListWithOrSeparator(lessOperators);
-			patterns.add("/¦number¦/=number1 < (/¦and¦/ << /¦" + lessOperatorsCombinated + "¦/ >> (/¦" + operatorToken
-					+ "¦/ << (/¦number¦/=number2 !<< /¦and¦/)))");
-			patterns.add("/¦number¦/=number1 > (/¦" + operatorToken + "¦/ < (/¦and¦/ << (/¦" + lessOperatorsCombinated
-					+ "¦/ << (/¦number¦/=number2 !<< /¦and¦/))))");
+			patterns.add("/¦number¦.*¦.*¦/=number1 < (/¦and¦/ << /¦" + lessOperatorsCombinated + "¦/ >> (/¦"
+					+ operatorToken + "¦/ << (/¦number¦.*¦.*¦/=number2 !<< /¦and¦/)))");
+			patterns.add("/¦number¦.*¦.*¦/=number1 > (/¦" + operatorToken + "¦/ < (/¦and¦/ << (/¦"
+					+ lessOperatorsCombinated + "¦/ << (/¦number¦.*¦.*¦/=number2 !<< /¦and¦/))))");
 			String[] numbers = getTextFromTwoNumbers(patterns);
+			if (numbers != null && tokens.get(operatorToken).getLemma().equals("begin")) {
+				if (numbers.length == 1) {
+					text = ">=" + numbers[0];
+					type = TypeRef_Table.NUMERIC;
+					return text;
+				}
+			}
+
 			if (numbers != null) {
 				if (numbers.length == 1) {
 					text = ">" + numbers[0];
@@ -104,7 +112,7 @@ public class Functions {
 				}
 			}
 			patterns.clear();
-			patterns.add("/¦number¦/=number1 >> (/¦" + operatorToken + "¦/ << (/¦or¦/ << /¦equal¦/) )");
+			patterns.add("/¦number¦.*¦.*¦/=number1 >> (/¦" + operatorToken + "¦/ << (/¦or¦/ << /¦equal¦/) )");
 			numbers = getTextFromTwoNumbers(patterns);
 			if (numbers != null) {
 				if (numbers.length == 1) {
@@ -117,7 +125,7 @@ public class Functions {
 		} else if (lessOperators.contains(tokens.get(operatorToken).getLemma())) {
 			// patterns.add("/¦number¦/=number1 >> (/¦" + operatorToken + "¦/ !<<
 			// /¦and¦|¦or¦/)");
-			patterns.add("/¦number¦/=number1 >> /¦" + operatorToken + "¦/ !<< /¦and¦|¦or¦/ !>> /¦and¦|¦or¦/");
+			patterns.add("/¦number¦.*¦.*¦/=number1 >> /¦" + operatorToken + "¦/ !<< /¦and¦|¦or¦/ !>> /¦and¦|¦or¦/");
 			String[] numbers = getTextFromTwoNumbers(patterns);
 			if (numbers != null) {
 				if (numbers.length == 1) {
@@ -127,7 +135,7 @@ public class Functions {
 				}
 			}
 			patterns.clear();
-			patterns.add("/¦number¦/=number1 >> (/¦" + operatorToken + "¦/ << (/¦or¦/ << /¦equal¦/) )");
+			patterns.add("/¦number¦.*¦.*¦/=number1 >> (/¦" + operatorToken + "¦/ << (/¦or¦/ << /¦equal¦/) )");
 			numbers = getTextFromTwoNumbers(patterns);
 			if (numbers != null) {
 				if (numbers.length == 1) {
@@ -137,8 +145,8 @@ public class Functions {
 				}
 			}
 		} else if (tokens.get(operatorToken).getLemma().equals("between")) {
-			patterns.add("/¦number¦/=number1 >> /¦" + operatorToken + "¦/ < (/¦and¦/ < /¦number¦/=number2)");
-			patterns.add("/¦number¦/=number1 < /¦" + operatorToken + "¦/ < (/¦and¦/ < /¦number¦/=number2)");
+			patterns.add("/¦number¦.*¦.*¦/=number1 >> /¦" + operatorToken + "¦/ < (/¦and¦/ < /¦number¦/=number2)");
+			patterns.add("/¦number¦.*¦.*¦/=number1 < /¦" + operatorToken + "¦/ < (/¦and¦/ < /¦number¦/=number2)");
 			String[] numbers = getTextFromTwoNumbers(patterns);
 			if (numbers != null) {
 				if (numbers.length == 2) {
@@ -148,7 +156,7 @@ public class Functions {
 				}
 			}
 		} else if (tokens.get(operatorToken).getLemma().equals("equal")) {
-			patterns.add("/¦number¦/=number1 > (/¦to¦/ > /¦" + operatorToken + "¦/)");
+			patterns.add("/¦number¦.*¦.*¦/=number1 > (/¦to¦/ > /¦" + operatorToken + "¦/)");
 			String[] numbers = getTextFromTwoNumbers(patterns);
 			if (numbers != null) {
 				if (numbers.length == 1) {
@@ -181,7 +189,8 @@ public class Functions {
 			}
 			text = tokens.get(operatorToken).getLemma();
 		} else if (tokens.get(operatorToken).getLemma().equals(">")) {
-			patterns.add("/¦number¦/=number1 > (/¦" + operatorToken
+			patterns.add("/¦number¦.*¦.*¦/=number1 > (/¦" + operatorToken + "¦/)");
+			patterns.add("/¦number¦.*¦.*¦/=number1 > (/¦" + operatorToken
 					+ "¦/ < (/¦and¦/ < (/¦punctuation¦/ < /¦number¦/=number2)))");
 			String[] numbers = getTextFromTwoNumbers(patterns);
 			if (numbers != null) {
@@ -190,6 +199,9 @@ public class Functions {
 					text = text.replace("=", "");
 					type = TypeRef_Table.NUMERIC;
 					return text;
+				} else {
+					text = ">" + numbers[0];
+					type = TypeRef_Table.NUMERIC;
 				}
 			}
 		}
@@ -270,6 +282,7 @@ public class Functions {
 				}
 			}
 			if (!text.trim().isEmpty()) {
+				text = text.replace("_%", "%");
 				return text.trim();
 			}
 		}

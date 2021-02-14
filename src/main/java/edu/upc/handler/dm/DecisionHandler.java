@@ -156,7 +156,7 @@ public class DecisionHandler {
 									System.out.println("> InputData: " + inputData.getId() + " - "
 											+ inputData.getDrgElement().getName());
 
-									inputDataList.put(inputToken, inputData);
+									inputDataList.put(inputToken+"_"+decisionToken, inputData);
 
 									inputDataList.putAll(idh.getInputDataFromUnderInputData(inputToken, tree, decision,
 											decisionActionToken));

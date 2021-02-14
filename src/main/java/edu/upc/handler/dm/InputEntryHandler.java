@@ -109,7 +109,10 @@ public class InputEntryHandler {
 			if (DmnFreelingUtils.argumentDifferentToA1(predicate, argument, tokens)) {
 				if (input == null)
 					input = getInputFromInputEntryNull(argument.getKey());
-				patientName = functions.getEntryName(argument.getKey());
+				if (isNumericVerb(resultActionToken)) {
+					patientName = functions.getEntryName(resultActionToken);
+				} else
+					patientName = functions.getEntryName(argument.getKey());
 				if (input != null)
 					input.setTypeRef(functions.getType());
 				inputEntry = new InputEntry_Rule(argument.getKey(), patientName, input, negation);
@@ -119,7 +122,12 @@ public class InputEntryHandler {
 				if (input != null) {
 					String agentName = functions.getInputDataName(argument.getKey());
 					if (!input.getName().toLowerCase().equals(agentName.toLowerCase())) {
-						patientName = functions.getEntryName(patient.getId()); //patient.getCompleteText().trim(); // functions.getTextFromNode(patient.getId());
+						if (isNumericVerb(resultActionToken)) {
+							patientName = functions.getEntryName(resultActionToken);
+						} else
+							patientName = functions.getEntryName(patient.getId()); // patient.getCompleteText().trim();
+																					// //
+																					// functions.getTextFromNode(patient.getId());
 						// if (input != null)
 						input.setTypeRef(functions.getType());
 						inputEntry = new InputEntry_Rule(patient.getId(), patientName, input, negation);
@@ -131,7 +139,10 @@ public class InputEntryHandler {
 							negation = DmnFreelingUtils.isNegation(arg.getHead_token(), trees);
 							if (tNegation != null)
 								negation = true;
-							patientName = functions.getEntryName(arg.getHead_token());
+							if (isNumericVerb(resultActionToken)) {
+								patientName = functions.getEntryName(resultActionToken);
+							} else
+								patientName = functions.getEntryName(arg.getHead_token());
 							if (input != null)
 								input.setTypeRef(functions.getType());
 							inputEntry = new InputEntry_Rule(arg.getHead_token(), patientName, input, negation);
@@ -164,6 +175,14 @@ public class InputEntryHandler {
 		 * InputEntry_Rule(resultActionToken, name, input, negation); }
 		 */
 		return inputEntry;
+	}
+
+	private boolean isNumericVerb(String resultActionToken) {
+		if (tokens.get(resultActionToken).getLemma().equals("begin")
+				|| tokens.get(resultActionToken).getLemma().equals("exceed")) {
+			return true;
+		}
+		return false;
 	}
 
 	public LinkedHashMap<String, InputEntry_Rule> getInputEntryUnderAction(String mainActionToken, Tree tree,

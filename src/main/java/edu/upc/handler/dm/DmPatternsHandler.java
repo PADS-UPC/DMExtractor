@@ -41,8 +41,6 @@ public class DmPatternsHandler {
 		inputDataList = new LinkedHashMap<String, InputData_Dmn>();
 		requirementList = new LinkedHashMap<String, Requirement>();
 
-		// DmnNlpParserHandler nlpParserHandler = new DmnNlpParserHandler(text);
-
 		// -------------------------------------------------------
 		// ------------ Extract Decision and InputDatas ----------
 		// -------------------------------------------------------
@@ -61,7 +59,7 @@ public class DmPatternsHandler {
 		//
 		decisionList = removeRepeatedDecision();
 		//
-		
+
 		// ---------------------------------------------------------------
 		// --------- Extract DecisionTables within each sentence ---------
 		// ---------------------------------------------------------------
