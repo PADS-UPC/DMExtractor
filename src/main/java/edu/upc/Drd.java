@@ -20,6 +20,7 @@ import org.camunda.bpm.model.dmn.instance.Rule;
 import org.camunda.bpm.model.dmn.instance.Text;
 import edu.upc.entities.dm.DecisionTable_Dmn;
 import edu.upc.entities.dm.Decision_Dmn;
+import edu.upc.entities.dm.InputData_Dmn;
 import edu.upc.entities.dm.InputEntry_Rule;
 import edu.upc.entities.dm.Input_Dmn;
 import edu.upc.entities.dm.Requirement;
@@ -37,13 +38,15 @@ public class Drd {
 	private LinkedHashMap<String, DecisionTable_Dmn> decisionTableList;
 	private LinkedHashMap<String, Decision_Dmn> decisionList;
 	private LinkedHashMap<String, Requirement> requirementList;
+	private LinkedHashMap<String, InputData_Dmn> inputDataList;
 
 	public Drd(LinkedHashMap<String, Decision_Dmn> decisionList,
 			LinkedHashMap<String, DecisionTable_Dmn> decisionTableList,
-			LinkedHashMap<String, Requirement> requirementList) {
+			LinkedHashMap<String, Requirement> requirementList, LinkedHashMap<String, InputData_Dmn> inputDataList) {
 		this.decisionList = decisionList;
 		this.decisionTableList = decisionTableList;
 		this.requirementList = requirementList;
+		this.inputDataList = inputDataList;
 	}
 
 	public String generateDrd() throws IOException {
@@ -78,11 +81,13 @@ public class Drd {
 					// Add Inputs to DecisionTable
 					for (Entry<String, Input_Dmn> inputData : dtdmn.getInputs().entrySet()) {
 						Input input = modelInstance.newInstance(Input.class);
-						input.setId("InputClause_" + inputData.getKey().replace(".", "-"));
+						input.setId("InputClause_" + inputData.getKey().replace(".", "-")
+								+ dtdmn.getId().replace(".", "-"));
 						input.setLabel(inputData.getValue().getName());
 						decisionTable.addChildElement(input);
 						InputExpression inputExpression = modelInstance.newInstance(InputExpression.class);
-						inputExpression.setId("LiteralExpression_" + inputData.getKey().replace(".", "-"));
+						inputExpression.setId("LiteralExpression_" + inputData.getKey().replace(".", "-") + "_"
+								+ dtdmn.getId().replace(".", "-"));
 						Text inputExpressionText = modelInstance.newInstance(Text.class);
 						// inputExpressionText.setTextContent(inputData.getValue().getExpression());
 						inputExpressionText.setTextContent(inputData.getValue().getExpression());// .getName().replaceAll("\\s+",
@@ -120,7 +125,8 @@ public class Drd {
 													inputEntryRule.getValue().getInput().getTypeRef(),
 													inputEntryRule.getValue().getNegation());
 
-											String id = "InputClause_" + input_Dmn.getKey().replace(".", "-");
+											String id = "InputClause_" + input_Dmn.getKey().replace(".", "-") + "_"
+													+ dtdmn.getId().replace(".", "-");
 											decisionTable.getInputs()
 													.forEach(input -> changeInputTypeRef(input, id, inputEntryRule));
 										}
@@ -142,13 +148,13 @@ public class Drd {
 							OutputEntry outputEntry = modelInstance.newInstance(OutputEntry.class);
 							String textContent = "";
 							if (ruleTable.getOutputEntry() != null) {
-								textContent = ruleTable.getOutputEntry().getText();
+								// textContent = ruleTable.getOutputEntry().getText();
 								textContent = getTextContent(ruleTable.getOutputEntry().getText(),
 										dtdmn.getOutput().getTypeRef(), ruleTable.getOutputEntry().getNegation());
-								text.setTextContent(textContent);
-								outputEntry.setId("outentry_" + ruleId + "_" + i);
-								outputEntry.setText(text);
 							}
+							text.setTextContent(textContent);
+							outputEntry.setId("outentry_" + ruleId + "_" + i);
+							outputEntry.setText(text);
 							rule.addChildElement(outputEntry);
 							decisionTable.addChildElement(rule);
 						}
@@ -158,9 +164,10 @@ public class Drd {
 		}
 
 		// Make InputDecision
-		for (Entry<String, Requirement> requirement : requirementList.entrySet()) {
-			String id = "InputData_" + requirement.getValue().getInputData().getId().replace(".", "-");
-			String name = requirement.getValue().getInputData().getDrgElement().getName();
+		for (Entry<String, InputData_Dmn> inputData_Dmn : inputDataList.entrySet()) {
+			String id = inputData_Dmn.getValue().getId().replace(".", "-");
+			id = "InputData_" + id;
+			String name = inputData_Dmn.getValue().getDrgElement().getName();
 			System.out.println(id + " -- " + name);
 			InputData inputData = modelInstance.newInstance(InputData.class);
 			inputData.setId(id);
@@ -188,6 +195,8 @@ public class Drd {
 
 			}
 		}
+		// TODO InputData Requirements
+		//
 		Dmn.validateModel(modelInstance);
 		String xmlString = Dmn.convertToString(modelInstance);
 		xmlString = xmlString.replace("http://www.omg.org/spec/DMN/20151101/dmn.xsd",

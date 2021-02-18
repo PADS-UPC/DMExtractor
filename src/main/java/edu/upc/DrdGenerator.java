@@ -30,7 +30,7 @@ public class DrdGenerator {
 					System.out.println("-------------------------------------------------");
 					parser = new DmParser(DmnFreelingUtils.readFile(nlpTextFilePath), "all", lang);
 					Drd drd = new Drd(parser.getDecisionList(), parser.getDecisionTableList(),
-							parser.getRequirementList());
+							parser.getRequirementList(), parser.getInputDataList());
 					String xmlString = drd.generateDrd();
 
 					Files.write(Paths.get(DmnFoldersUrl.OUTPUT_FOLDER + "/dmn/" + justNameOfFile + ".dmn"),
@@ -38,13 +38,13 @@ public class DrdGenerator {
 				}
 			}
 		} else {
-			String nlpTextFilePath = System.getProperty("user.home") + "/doc2dmnutils/" + lang + "/input/texts/";
-			nlpTextFilePath += "test";
-			nlpTextFilePath += ".txt";
+			String nlpTextFilePath = System.getProperty("user.home") + "/doc2dmnutils/" + lang
+					+ "/input/texts/test.txt";
 			String justNameOfFile = DmnFreelingUtils.getFileNameWithoutExtension(new File(nlpTextFilePath));
 			parser = new DmParser(DmnFreelingUtils.readFile(nlpTextFilePath), "all", lang);
 			///////////////
-			Drd drd = new Drd(parser.getDecisionList(), parser.getDecisionTableList(), parser.getRequirementList());
+			Drd drd = new Drd(parser.getDecisionList(), parser.getDecisionTableList(), parser.getRequirementList(),
+					parser.getInputDataList());
 			String xmlString = drd.generateDrd();
 
 			Files.write(Paths.get(DmnFoldersUrl.OUTPUT_FOLDER + "/dmn/" + justNameOfFile + ".dmn"),
