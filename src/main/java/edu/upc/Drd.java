@@ -116,7 +116,7 @@ public class Drd {
 												.toLowerCase().trim();
 										if (inputName.contains(inputNameFromEntry)
 												|| inputNameFromEntry.contains(inputName)) {
-											inputEntryText = getText(inputEntryRule.getValue().getText(),
+											inputEntryText = getTextContent(inputEntryRule.getValue().getText(),
 													inputEntryRule.getValue().getInput().getTypeRef(),
 													inputEntryRule.getValue().getNegation());
 
@@ -139,14 +139,16 @@ public class Drd {
 							}
 
 							Text text = modelInstance.newInstance(Text.class);
-							String textContent = ruleTable.getOutputEntry().getText();
-							textContent = getText(ruleTable.getOutputEntry().getText(), dtdmn.getOutput().getTypeRef(),
-									ruleTable.getOutputEntry().getNegation());
-							text.setTextContent(textContent);
 							OutputEntry outputEntry = modelInstance.newInstance(OutputEntry.class);
-							outputEntry.setId("outentry_" + ruleId + "_" + i);
-							outputEntry.setText(text);
-
+							String textContent = "";
+							if (ruleTable.getOutputEntry() != null) {
+								textContent = ruleTable.getOutputEntry().getText();
+								textContent = getTextContent(ruleTable.getOutputEntry().getText(),
+										dtdmn.getOutput().getTypeRef(), ruleTable.getOutputEntry().getNegation());
+								text.setTextContent(textContent);
+								outputEntry.setId("outentry_" + ruleId + "_" + i);
+								outputEntry.setText(text);
+							}
 							rule.addChildElement(outputEntry);
 							decisionTable.addChildElement(rule);
 						}
@@ -193,7 +195,7 @@ public class Drd {
 		return xmlString;
 	}
 
-	private String getText(String text, TypeRef_Table typeRef, Boolean negation) {
+	private String getTextContent(String text, TypeRef_Table typeRef, Boolean negation) {
 		if (typeRef.equals(TypeRef_Table.BOOLEAN)) {
 			if (negation) {
 				if (text.equals("true"))

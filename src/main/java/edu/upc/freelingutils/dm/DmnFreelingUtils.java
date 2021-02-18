@@ -21,6 +21,8 @@ import edu.upc.entities.Activity;
 import edu.upc.entities.Predicate;
 import edu.upc.entities.PredicateArgument;
 import edu.upc.entities.Token;
+import edu.upc.freelingutils.FreelingUtils;
+import edu.upc.handler.TreesHandler;
 
 public class DmnFreelingUtils {
 	public static final String separator = "¦";
@@ -275,4 +277,26 @@ public class DmnFreelingUtils {
 		return false;
 	}
 
+	public static LinkedHashMap<String, Activity> removeActions(List<Tree> trees, LinkedHashMap<String, Token> tokens,
+			LinkedHashMap<String, Activity> activitiesList) throws IOException {
+		ArrayList<String> patternStrList = FreelingUtils.readPatternFile(DmnFilesUrl.REMOVE_ACTIONS.toString());
+		TreesHandler treesHandler = new TreesHandler(trees, tokens);
+		for (String patternStr : patternStrList) {
+			TregexPattern pattern = TregexPattern.compile(patternStr);
+			for (int i = 0; i < trees.size(); i++) {
+				TregexMatcher matcher = pattern.matcher(trees.get(i));
+				while (matcher.findNextMatchingNode()) {
+					Tree tToRemove = matcher.getNode("toRemove");
+					if (tToRemove != null) {
+						String tokenTremove = FreelingUtils.getTokenFromNode(tToRemove.label().value());
+						if (activitiesList.containsKey(tokenTremove)) {
+							activitiesList.remove(tokenTremove);
+						}
+					}
+				}
+			}
+			treesHandler.refreshTree(activitiesList);
+		}
+		return activitiesList;
+	}
 }

@@ -29,6 +29,7 @@ public class Functions {
 
 	private ArrayList<String> namesToRemove = new ArrayList<String>(
 			Arrays.asList("in", "on", "to", "with", "whenever", "otherwise", "when"));
+	private ArrayList<String> namesToPreserve = new ArrayList<String>(Arrays.asList("between"));
 
 	private ArrayList<String> greaterOperators = new ArrayList<String>();
 	private ArrayList<String> lessOperators = new ArrayList<String>();
@@ -51,32 +52,12 @@ public class Functions {
 
 		this.setType(TypeRef_Table.STRING);
 		//
-		greaterOperators.addAll(Arrays.asList("great", "more", "high", "above", "exceed", "begin"));
+		greaterOperators.addAll(Arrays.asList("great", "more", "high", "above", "exceed", "begin", ">"));
 		//
-		lessOperators.addAll(Arrays.asList("less", "fewer"));
+		lessOperators.addAll(Arrays.asList("less", "fewer", "<"));
 		//
 		// Verbs: exceed, begin, start = >
 
-	}
-
-	private String getNewTokenAfterToRemoveName(String operatorToken) {
-		ArrayList<String> patterns = new ArrayList<String>();
-		if (namesToRemove.contains(tokens.get(operatorToken).getLemma())) {
-			patterns.add("/¦t.*¦/=result > /¦" + operatorToken + "¦/");
-			for (String patternStr : patterns) {
-				TregexPattern pattern = TregexPattern.compile(patternStr);
-				for (int i = 0; i < trees.size(); i++) {
-					TregexMatcher matcher = pattern.matcher(trees.get(i));
-					while (matcher.findNextMatchingNode()) {
-						Tree tResult = matcher.getNode("result");
-						if (tResult != null) {
-							return DmnFreelingUtils.getTokenFromNode(tResult.label().value());
-						}
-					}
-				}
-			}
-		}
-		return null;
 	}
 
 	private String getTextInExpressionLanguage(String operatorToken) {
@@ -96,7 +77,7 @@ public class Functions {
 				if (numbers.length == 1) {
 					text = ">=" + numbers[0];
 					type = TypeRef_Table.NUMERIC;
-					return text;
+					return toFormat(text);
 				}
 			}
 
@@ -104,11 +85,11 @@ public class Functions {
 				if (numbers.length == 1) {
 					text = ">" + numbers[0];
 					type = TypeRef_Table.NUMERIC;
-					return text;
+					return toFormat(text);
 				} else if (numbers.length == 2) {
 					text = "[" + numbers[0] + ".." + numbers[1] + "]";
 					type = TypeRef_Table.NUMERIC;
-					return text;
+					return toFormat(text);
 				}
 			}
 			patterns.clear();
@@ -118,7 +99,7 @@ public class Functions {
 				if (numbers.length == 1) {
 					text = ">=" + numbers[0];
 					type = TypeRef_Table.NUMERIC;
-					return text;
+					return toFormat(text);
 				}
 			}
 
@@ -131,7 +112,7 @@ public class Functions {
 				if (numbers.length == 1) {
 					text = "<" + numbers[0];
 					type = TypeRef_Table.NUMERIC;
-					return text;
+					return toFormat(text);
 				}
 			}
 			patterns.clear();
@@ -141,18 +122,18 @@ public class Functions {
 				if (numbers.length == 1) {
 					text = "<=" + numbers[0];
 					type = TypeRef_Table.NUMERIC;
-					return text;
+					return toFormat(text);
 				}
 			}
 		} else if (tokens.get(operatorToken).getLemma().equals("between")) {
-			patterns.add("/¦number¦.*¦.*¦/=number1 >> /¦" + operatorToken + "¦/ < (/¦and¦/ < /¦number¦/=number2)");
-			patterns.add("/¦number¦.*¦.*¦/=number1 < /¦" + operatorToken + "¦/ < (/¦and¦/ < /¦number¦/=number2)");
+			patterns.add("/¦number¦.*¦.*¦/=number1 >> /¦" + operatorToken + "¦/ < (/¦and¦/ << /¦number¦/=number2)");
+			patterns.add("/¦number¦.*¦.*¦/=number1 < /¦" + operatorToken + "¦/ < (/¦and¦/ << /¦number¦/=number2)");
 			String[] numbers = getTextFromTwoNumbers(patterns);
 			if (numbers != null) {
 				if (numbers.length == 2) {
 					text = "[" + numbers[0] + ".." + numbers[1] + "]";
 					type = TypeRef_Table.NUMERIC;
-					return text;
+					return toFormat(text);
 				}
 			}
 		} else if (tokens.get(operatorToken).getLemma().equals("equal")) {
@@ -162,7 +143,7 @@ public class Functions {
 				if (numbers.length == 1) {
 					text = numbers[0];
 					type = TypeRef_Table.NUMERIC;
-					return text;
+					return toFormat(text);
 				}
 			}
 		} else if (tokens.get(operatorToken).getPos().equals("number")) {
@@ -170,21 +151,23 @@ public class Functions {
 			String stringWithOrBarFromList = DmnFreelingUtils.joinStringsListWithOrSeparator(greaterOperators);
 			patterns.add("/¦" + operatorToken + "¦/=number1 << (/¦or¦/ << /¦" + stringWithOrBarFromList + "¦/)");
 			patterns.add("/¦" + operatorToken + "¦/=number1 < /¦more¦/ < /¦than¦/");
+			patterns.add("/¦" + operatorToken + "¦/=number1 > /¦exceed¦/");
 			String[] numbers = getTextFromTwoNumbers(patterns);
 			if (numbers != null) {
 				if (numbers.length == 1) {
 					text = ">" + numbers[0];
-					return text;
+					return toFormat(text);
 				}
 			}
 			stringWithOrBarFromList = DmnFreelingUtils.joinStringsListWithOrSeparator(lessOperators);
 			patterns.clear();
 			patterns.add("/¦" + operatorToken + "¦/=number1 << (/¦or¦/ << /¦" + stringWithOrBarFromList + "¦/)");
+			patterns.add("/¦" + operatorToken + "¦/=number1 < /¦less¦/ < /¦than¦/");
 			numbers = getTextFromTwoNumbers(patterns);
 			if (numbers != null) {
 				if (numbers.length == 1) {
 					text = "<" + numbers[0];
-					return text;
+					return toFormat(text);
 				}
 			}
 			text = tokens.get(operatorToken).getLemma();
@@ -198,14 +181,24 @@ public class Functions {
 					text = "[" + numbers[0] + ".." + numbers[1] + "]";
 					text = text.replace("=", "");
 					type = TypeRef_Table.NUMERIC;
-					return text;
+					return toFormat(text);
 				} else {
 					text = ">" + numbers[0];
 					type = TypeRef_Table.NUMERIC;
 				}
 			}
 		}
+		return toFormat(text);
+	}
 
+	private String toFormat(String text) {
+		if (text != null) {
+			text = text.replace("$_EUR:", "");
+			if (text.contains("/")) {
+				String[] textTmp = text.split("/");
+				text = textTmp[0] + "%";
+			}
+		}
 		return text;
 	}
 
@@ -251,7 +244,7 @@ public class Functions {
 	}
 
 	public String getEntryName(String patientToken) {
-		String newToken = getNewTokenAfterToRemoveName(patientToken);
+		String newToken = getNewTokenAfterToRemoveNameEntryName(patientToken);
 		if (newToken != null)
 			patientToken = newToken;
 
@@ -318,7 +311,7 @@ public class Functions {
 	}
 
 	public String getInputDataName(String patientToken) {
-		String newToken = getNewTokenAfterToRemoveName(patientToken);
+		String newToken = getNewTokenAfterToRemoveNameInputData(patientToken);
 		if (newToken != null)
 			patientToken = newToken;
 		String text = "";
@@ -372,6 +365,46 @@ public class Functions {
 				findSubjectInSubtreesAndMakeName(patientToken2, tNounResult);
 			}
 		}
+	}
+
+	private String getNewTokenAfterToRemoveNameEntryName(String operatorToken) {
+		ArrayList<String> patterns = new ArrayList<String>();
+		if (namesToRemove.contains(tokens.get(operatorToken).getLemma())) {
+			patterns.add("/¦t.*¦/=result > /¦" + operatorToken + "¦/");
+		} else {
+			patterns.add("/¦number¦/=result > /¦" + operatorToken + "¦/");
+			patterns.add("/¦number¦/=result > (/¦of¦/ > /¦" + operatorToken + "¦/)");
+		}
+
+		return getNewTokenAfterToRemoveName(operatorToken, patterns);
+	}
+
+	private String getNewTokenAfterToRemoveNameInputData(String operatorToken) {
+		ArrayList<String> patterns = new ArrayList<String>();
+		if (namesToRemove.contains(tokens.get(operatorToken).getLemma())) {
+			patterns.add("/¦t.*¦/=result > /¦" + operatorToken + "¦/");
+		}
+		return getNewTokenAfterToRemoveName(operatorToken, patterns);
+	}
+
+	private String getNewTokenAfterToRemoveName(String operatorToken, ArrayList<String> patterns) {
+		if (namesToPreserve.contains(tokens.get(operatorToken).getLemma())
+				|| greaterOperators.contains(tokens.get(operatorToken).getLemma())
+				|| lessOperators.contains(tokens.get(operatorToken).getLemma()))
+			return null;
+		for (String patternStr : patterns) {
+			TregexPattern pattern = TregexPattern.compile(patternStr);
+			for (int i = 0; i < trees.size(); i++) {
+				TregexMatcher matcher = pattern.matcher(trees.get(i));
+				while (matcher.findNextMatchingNode()) {
+					Tree tResult = matcher.getNode("result");
+					if (tResult != null) {
+						return DmnFreelingUtils.getTokenFromNode(tResult.label().value());
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 	public TypeRef_Table getType() {

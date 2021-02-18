@@ -6,7 +6,7 @@ public class Input_Dmn {
 
 	private String id;
 	private String name; //Obesity level
-	private String expression; // obesitylever
+	private String expression; // obesitylevel
 	private TypeRef_Table typeRef; //string, boolean
 
 	public Input_Dmn(String id, String name, String expression, TypeRef_Table typeRef) {

@@ -57,19 +57,23 @@ public class OutputEntryHandler {
 					if (arg != null) {
 						Boolean negation = DmnFreelingUtils.isNegation(arg.getHead_token(), trees);
 						String name = functions.getEntryName(arg.getHead_token());
-						outputEntry = new OutputEntry_Rule(arg.getHead_token(), name, negation);
+						if (name != null)
+							outputEntry = new OutputEntry_Rule(arg.getHead_token(), name, negation);
 					} else {
 						Boolean negation = DmnFreelingUtils.isNegation(id, trees);
 						String name = functions.getEntryName(id);
-						outputEntry = new OutputEntry_Rule(id, name, negation);
+						if (name != null)
+							outputEntry = new OutputEntry_Rule(id, name, negation);
 					}
 				}
 			}
 		} else if (decisionNounToken != null) {
 			Boolean negation = DmnFreelingUtils.isNegation(decisionNounToken, trees);
 			outputEntry = new OutputEntry_Rule(decisionNounToken, functions.getEntryName(decisionNounToken), negation);
-		}
-		if (outputEntry == null) {
+		} else
+			return null;
+
+		if (outputEntry == null && decisionActionToken != null) {
 			String text = tokens.get(decisionActionToken).getLemma();
 			Boolean negation = DmnFreelingUtils.isNegation(decisionActionToken, trees);
 			outputEntry = new OutputEntry_Rule(decisionActionToken, text, negation);
@@ -78,7 +82,6 @@ public class OutputEntryHandler {
 			outputEntry.setText("true");
 			decisionTable.getOutput().setTypeRef(TypeRef_Table.BOOLEAN);
 		}
-
 		return outputEntry;
 	}
 }

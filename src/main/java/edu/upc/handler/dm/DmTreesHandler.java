@@ -72,6 +72,7 @@ public class DmTreesHandler {
 		String node = tree.value();
 		String newNode = makeNode(decision.getDrgElement().getToken(), tokens);
 		if (node.equals(newNode)) {
+			if( decision.getAction()!=null)
 			newNode = tree.value() + decision.getDrgElement().getType() + ":" + decision.getAction().getId()
 					+ separator;
 			tree.setValue(newNode);

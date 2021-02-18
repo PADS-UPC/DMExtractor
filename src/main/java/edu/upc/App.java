@@ -41,9 +41,7 @@ public class App {
 				}
 			}
 		} else {
-			String nlpTextFilePath = DmnFoldersUrl.INPUT_FOLDER + "/texts/";
-			nlpTextFilePath += "test";
-			nlpTextFilePath += ".txt";
+			String nlpTextFilePath = DmnFoldersUrl.INPUT_FOLDER + "/texts/test.txt";
 			String justNameOfFile = DmnFreelingUtils.getFileNameWithoutExtension(new File(nlpTextFilePath));
 			DmParser parser = new DmParser(DmnFreelingUtils.readFile(nlpTextFilePath), "all", lang);
 			Files.write(Paths.get(treeFolder + "/" + justNameOfFile + ".trx"), parser.getTrees().toString().getBytes());
@@ -54,8 +52,6 @@ public class App {
 					superTree.toString().getBytes());
 
 		}
-
 		System.out.println("DMExtractor DONE!");
-
 	}
 }

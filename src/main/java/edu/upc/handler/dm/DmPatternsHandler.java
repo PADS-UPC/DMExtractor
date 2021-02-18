@@ -37,9 +37,9 @@ public class DmPatternsHandler {
 		this.activitiesList = activitiesList;
 		this.predicates = predicates;
 
-		decisionList = new LinkedHashMap<String, Decision_Dmn>();
-		inputDataList = new LinkedHashMap<String, InputData_Dmn>();
-		requirementList = new LinkedHashMap<String, Requirement>();
+		decisionList = null;
+		inputDataList = null;
+		requirementList = null;
 
 		// -------------------------------------------------------
 		// ------------ Extract Decision and InputDatas ----------
@@ -47,6 +47,15 @@ public class DmPatternsHandler {
 		DecisionHandler dh = new DecisionHandler(activitiesList, tokens, trees, predicates);
 		decisionList = dh.extractDecionsWithListOfVerbs();
 		inputDataList = dh.getInputDataList();
+
+		if (decisionList == null || decisionList.size() == 0) {
+			DecisionWithoutRequimentLevelHandler dwrh = new DecisionWithoutRequimentLevelHandler(activitiesList, tokens,
+					trees, predicates, decisionTableList);
+			dwrh.process();
+			decisionList = dwrh.getDecisionList();
+			inputDataList = dwrh.getInputDataList();
+
+		}
 
 		refreshTrees();
 

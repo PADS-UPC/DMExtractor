@@ -53,7 +53,7 @@ public class InputEntryHandler {
 			// There is inputs under inputAction
 			String actionToken = DmnFreelingUtils.getTokenFromNode(tInputAction.label().value());
 			Input_Dmn input = null;
-			InputEntry_Rule inputEntry_Rule = getInputEntryFromAction(actionToken, input, tNegation);
+			InputEntry_Rule inputEntry_Rule = getInputEntryFromAction(tInputAction, input, tNegation);
 			inputEntries.put(inputEntry_Rule.getId(), inputEntry_Rule);
 			inputEntries.putAll(getInputEntryUnderAction(actionToken, tree, tNegation));
 
@@ -90,8 +90,9 @@ public class InputEntryHandler {
 		return input;
 	}
 
-	private InputEntry_Rule getInputEntryFromAction(String resultActionToken, Input_Dmn input, Tree tNegation)
+	private InputEntry_Rule getInputEntryFromAction(Tree tAction, Input_Dmn input, Tree tNegation)
 			throws IOException {
+		String resultActionToken = DmnFreelingUtils.getTokenFromNode(tAction.label().value());
 		Boolean negation = DmnFreelingUtils.isNegation(resultActionToken, trees);
 		if (tNegation != null)
 			negation = true;
@@ -199,7 +200,7 @@ public class InputEntryHandler {
 				Input_Dmn input = null;
 				if (tResultAction != null) {
 					String resultActionToken = DmnFreelingUtils.getTokenFromNode(tResultAction.label().value());
-					InputEntry_Rule inputEntry_Rule = getInputEntryFromAction(resultActionToken, input, tNegation);
+					InputEntry_Rule inputEntry_Rule = getInputEntryFromAction(tResultAction, input, tNegation);
 					inputEntryList.put(inputEntry_Rule.getId(), inputEntry_Rule);
 					inputEntryList.putAll(getInputEntryUnderAction(resultActionToken, tResultAction, tNegation));
 				}

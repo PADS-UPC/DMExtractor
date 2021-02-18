@@ -95,7 +95,12 @@ public class DmParser {
 							else
 								System.out.print("> " + inputEntry.getValue().getText() + "\t");
 						}
-						System.out.print("> " + rule.getOutputEntry().getText() + "\n");
+						if (rule.getOutputEntry() != null)
+							if (rule.getOutputEntry().getNegation())
+								System.out.print("> not(" + rule.getOutputEntry().getText() + ")");
+							else
+								System.out.print("> " + rule.getOutputEntry().getText());
+						System.out.print("\n");
 					}
 				}
 			}

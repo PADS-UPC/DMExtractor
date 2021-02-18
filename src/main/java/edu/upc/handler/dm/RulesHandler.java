@@ -22,11 +22,9 @@ import edu.upc.entities.dm.Input_Dmn;
 import edu.upc.entities.dm.OutputEntry_Rule;
 import edu.upc.entities.dm.Rule_Table;
 import edu.upc.freelingutils.ActionType;
-import edu.upc.freelingutils.FreelingUtils;
 import edu.upc.freelingutils.dm.DmnFilesUrl;
 import edu.upc.freelingutils.dm.DmnFreelingUtils;
 import edu.upc.freelingutils.dm.TypeRef_Table;
-import edu.upc.handler.TreesHandler;
 
 public class RulesHandler {
 	private LinkedHashMap<String, Token> tokens;
@@ -55,7 +53,7 @@ public class RulesHandler {
 
 	public LinkedHashMap<String, DecisionTable_Dmn> ExtractRules() throws IOException {
 		// Remove weak actions
-		removeActions();
+		activitiesList= DmnFreelingUtils.removeActions(trees,tokens,activitiesList);
 
 		ArrayList<String> patternStrList = DmnFreelingUtils.readPatternFile(DmnFilesUrl.DECISIONTABLE_RULES.toString());
 		LinkedHashMap<String, InputEntry_Rule> inputEntries = new LinkedHashMap<String, InputEntry_Rule>();
@@ -303,25 +301,5 @@ public class RulesHandler {
 		return decision;
 	}
 
-	private void removeActions() throws IOException {
-		ArrayList<String> patternStrList = FreelingUtils.readPatternFile(DmnFilesUrl.REMOVE_ACTIONS.toString());
-		TreesHandler treesHandler = new TreesHandler(trees, tokens);
-		for (String patternStr : patternStrList) {
-			TregexPattern pattern = TregexPattern.compile(patternStr);
-			for (int i = 0; i < trees.size(); i++) {
-				TregexMatcher matcher = pattern.matcher(trees.get(i));
-				while (matcher.findNextMatchingNode()) {
-					Tree tToRemove = matcher.getNode("toRemove");
-					if (tToRemove != null) {
-						String tokenTremove = FreelingUtils.getTokenFromNode(tToRemove.label().value());
-						if (activitiesList.containsKey(tokenTremove)) {
-							activitiesList.remove(tokenTremove);
-						}
-					}
-				}
-			}
-			treesHandler.refreshTree(activitiesList);
-		}
-
-	}
+	
 }
