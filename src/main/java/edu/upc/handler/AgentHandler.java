@@ -10,6 +10,7 @@ import edu.stanford.nlp.trees.tregex.TregexMatcher;
 import edu.stanford.nlp.trees.tregex.TregexPattern;
 import edu.upc.entities.Agent;
 import edu.upc.entities.Entity;
+import edu.upc.entities.Mention;
 import edu.upc.entities.Predicate;
 import edu.upc.entities.Token;
 import edu.upc.freelingutils.FilesUrl;
@@ -22,6 +23,7 @@ public class AgentHandler {
 	private LinkedHashMap<String, Predicate> predicates;
 	private ArrayList<String> posTagToLimitShortAgentName;
 	private ArrayList<String> prepositionToLimitAgentName;
+	private LinkedHashMap<String, Entity> entities;
 	private String beginToken, endToken;
 
 	public AgentHandler(List<Tree> trees, LinkedHashMap<String, Token> tokens,
@@ -31,6 +33,7 @@ public class AgentHandler {
 		this.tokens = tokens;
 		this.predicates = predicates;
 		this.agentList = new LinkedHashMap<String, Agent>();
+		this.entities = entities;
 
 		posTagToLimitShortAgentName = new ArrayList<String>();
 		posTagToLimitShortAgentName = DmnFreelingUtils.readPatternFile(FilesUrl.POSTAG_TO_LIMIT_AGENT_NAME.toString());
@@ -42,9 +45,31 @@ public class AgentHandler {
 		fillAgentsFromPredicate();
 		//// To DMN it is not necessary
 		//// removeEqualAgentInOtherMentions_coreference();
-
+		// new for DMN
+		fillCoreference();
+		
 		delimiteAgentsNameLength();
 		agentList = removeAgentsWithNullShortName();
+	}
+
+	private void fillCoreference() {
+		for (Entry<String, Agent> agent : agentList.entrySet()) {
+			LinkedHashMap<String, Mention> mentions = new LinkedHashMap<String, Mention>();
+			for (Entry<String, Entity> entity : entities.entrySet()) {
+				if (entity.getValue().getMentions().containsKey(agent.getKey())) {
+					for (Entry<String, Mention> mention : entity.getValue().getMentions().entrySet()) {
+						String agentToken = agent.getKey().split("\\.")[0];
+						String mentionToken = mention.getKey().split("\\.")[0];
+						if (agentToken.equals(mentionToken))
+							mentions.put(mention.getKey(),mention.getValue());
+					}
+					break;
+				}
+			}
+			if (agentList.get(agent.getKey()) != null)
+				agentList.get(agent.getKey()).setMentions(mentions);
+		}
+
 	}
 
 	private void delimiteAgentsNameLength() {
@@ -121,6 +146,32 @@ public class AgentHandler {
 				agentList.put(head_token, agent);
 			}
 		}
+	}
+
+	private void removeEqualAgentInOtherMentions_coreference() {
+		LinkedHashMap<String, Agent> agentsTmp = new LinkedHashMap<String, Agent>();
+		for (Entry<String, Agent> agent : agentList.entrySet()) {
+			if (agent.getValue().getCompleteText() != null) {
+				agentsTmp.put(agent.getKey(), new Agent(agent.getKey(), agent.getValue().getCompleteText(),
+						agent.getValue().getBegin(), agent.getValue().getEnd()));
+			}
+			LinkedHashMap<String, Mention> mentions = new LinkedHashMap<String, Mention>();
+			for (Entry<String, Entity> entity : entities.entrySet()) {
+				if (entity.getValue().getMentions().containsKey(agent.getKey())) {
+					for (Entry<String, Mention> mention : entity.getValue().getMentions().entrySet()) {
+						if (agentList.containsKey(mention.getKey())) {
+							agentList.get(mention.getKey()).setCompleteText(null);
+							agentList.get(mention.getKey()).setShortText(null);
+						}
+					}
+					mentions = entity.getValue().getMentions();
+					break;
+				}
+			}
+			if (agentsTmp.get(agent.getKey()) != null)
+				agentsTmp.get(agent.getKey()).setMentions(mentions);
+		}
+		agentList = agentsTmp;
 	}
 
 	private LinkedHashMap<String, Agent> removeAgentsWithNullShortName() {

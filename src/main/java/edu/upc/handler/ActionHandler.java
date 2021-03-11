@@ -45,12 +45,14 @@ public class ActionHandler {
 						tokens.get(predicate.getKey()).getBegin(), tokens.get(predicate.getKey()).getEnd());
 				if (predicate.getValue().getArgumentA0() != null) {
 					// Make Coreference
+					// Not necessary for DMN
 					for (Entry<String, Agent> agentTmp : agentsList.entrySet()) {
-						if (agentTmp.getValue().getMentions()
-								.get(predicate.getValue().getArgumentA0().getHead_token()) != null) {
-							agent = agentTmp.getValue();
-							break;
-						} else if (agentTmp.getKey().equals(predicate.getValue().getArgumentA0().getHead_token())) {
+						//if (agentTmp.getValue().getMentions()
+						//		.get(predicate.getValue().getArgumentA0().getHead_token()) != null) {
+						//	agent = agentTmp.getValue();
+						//	break;
+						//} else 
+							if (agentTmp.getKey().equals(predicate.getValue().getArgumentA0().getHead_token())) {
 							agent = agentTmp.getValue();
 							break;
 						}

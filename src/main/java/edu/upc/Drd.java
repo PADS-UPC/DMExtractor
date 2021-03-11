@@ -37,7 +37,6 @@ public class Drd {
 	DmnModelInstance modelInstance;// = Dmn.createEmptyModel();
 	private LinkedHashMap<String, DecisionTable_Dmn> decisionTableList;
 	private LinkedHashMap<String, Decision_Dmn> decisionList;
-	private LinkedHashMap<String, Requirement> requirementList;
 	private LinkedHashMap<String, InputData_Dmn> inputDataList;
 
 	public Drd(LinkedHashMap<String, Decision_Dmn> decisionList,
@@ -45,7 +44,6 @@ public class Drd {
 			LinkedHashMap<String, Requirement> requirementList, LinkedHashMap<String, InputData_Dmn> inputDataList) {
 		this.decisionList = decisionList;
 		this.decisionTableList = decisionTableList;
-		this.requirementList = requirementList;
 		this.inputDataList = inputDataList;
 	}
 
@@ -201,6 +199,8 @@ public class Drd {
 		String xmlString = Dmn.convertToString(modelInstance);
 		xmlString = xmlString.replace("http://www.omg.org/spec/DMN/20151101/dmn.xsd",
 				"https://www.omg.org/spec/DMN/20191111/MODEL/");
+		//File dmnFile = new File(FoldersUrl.OUTPUT_FOLDER.getDescription()+"/dmn/test.dmn");
+		//Dmn.writeModelToFile(dmnFile, modelInstance);
 		return xmlString;
 	}
 

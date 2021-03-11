@@ -52,7 +52,7 @@ public class Functions {
 
 		this.setType(TypeRef_Table.STRING);
 		//
-		greaterOperators.addAll(Arrays.asList("great", "more", "high", "above", "exceed", "begin", ">"));
+		greaterOperators.addAll(Arrays.asList("great", "more", "high", "above", "exceed", "begin", ">","at_least"));
 		//
 		lessOperators.addAll(Arrays.asList("less", "fewer", "<"));
 		//
@@ -94,6 +94,7 @@ public class Functions {
 			}
 			patterns.clear();
 			patterns.add("/¦number¦.*¦.*¦/=number1 >> (/¦" + operatorToken + "¦/ << (/¦or¦/ << /¦equal¦/) )");
+			patterns.add("/¦number¦.*¦.*¦/=number1 $, /¦"+operatorToken+"¦/");
 			numbers = getTextFromTwoNumbers(patterns);
 			if (numbers != null) {
 				if (numbers.length == 1) {
@@ -374,6 +375,7 @@ public class Functions {
 		} else {
 			patterns.add("/¦number¦/=result > /¦" + operatorToken + "¦/");
 			patterns.add("/¦number¦/=result > (/¦of¦/ > /¦" + operatorToken + "¦/)");
+			patterns.add("/¦at_least¦/=result >> (/¦"+operatorToken+"¦/ << /¦number¦/ >> /¦and¦/)");
 		}
 
 		return getNewTokenAfterToRemoveName(operatorToken, patterns);

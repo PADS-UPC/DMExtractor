@@ -18,9 +18,10 @@ public class RequirementHandler {
 
 	public LinkedHashMap<String, Requirement> process(LinkedHashMap<String, InputData_Dmn> inputDataList) {
 		for (Entry<String, InputData_Dmn> inputData : inputDataList.entrySet()) {
-			if (!inputData.getKey().equals(inputData.getValue().getDecision().getId()) 
-					&& !inputData.getValue()
-					.getDrgElement().getName().equals(inputData.getValue().getDecision().getDrgElement().getName())) {
+			String inputDataName = inputData.getValue().getDrgElement().getName();
+			String decisionName = inputData.getValue().getDecision().getDrgElement().getName();
+			if (!inputData.getKey().equals(inputData.getValue().getDecision().getId())
+					&& !inputDataName.equals(decisionName)) {
 				Requirement requirement = new Requirement(inputData.getValue(), inputData.getValue().getDecision());
 				requirementList.put(inputData.getKey(), requirement);
 				System.out.println(
