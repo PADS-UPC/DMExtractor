@@ -1,4 +1,4 @@
-package edu.upc.freelingutils.dm;
+package edu.upc.parserutils.dm;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -21,8 +21,9 @@ import edu.upc.entities.Activity;
 import edu.upc.entities.Predicate;
 import edu.upc.entities.PredicateArgument;
 import edu.upc.entities.Token;
-import edu.upc.freelingutils.FreelingUtils;
 import edu.upc.handler.TreesHandler;
+import edu.upc.parserutils.FilesUrl;
+import edu.upc.parserutils.FreelingUtils;
 
 public class DmnFreelingUtils {
 	public static final String separator = "¦";
@@ -34,9 +35,9 @@ public class DmnFreelingUtils {
 	public static boolean isNounActionToAdd(String wn, String lemma, Boolean toAdd) throws IOException {
 		ArrayList<String[]> nounActivityList = null;
 		if (toAdd)
-			nounActivityList = readNounActivityFile(DmnFilesUrl.FREEELING_NOUN_TO_ADD_CONFIG_FILE.toString());
+			nounActivityList = readNounActivityFile(FilesUrl.FREEELING_NOUN_TO_ADD_CONFIG_FILE.toString());
 		else
-			nounActivityList = readNounActivityFile(DmnFilesUrl.FREEELING_NOUN_CONFIG_FILE.toString());
+			nounActivityList = readNounActivityFile(FilesUrl.FREEELING_NOUN_CONFIG_FILE.toString());
 		if (wn != null && lemma != null)
 			for (int i = 0; i < nounActivityList.size(); i++) {
 				if (wn.equals(nounActivityList.get(i)[0]) && nounActivityList.get(i)[1].contains(lemma)) {

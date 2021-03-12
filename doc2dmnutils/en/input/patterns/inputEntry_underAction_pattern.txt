@@ -1,0 +1,12 @@
+/¦ACTION:.*¦/=resultAction > (/¦and¦/ >> /¦[actionToken]¦/)
+/¦ACTION:.*¦/=resultAction > (/¦be¦/ > (/¦and¦/ > /¦[actionToken]¦/))
+/¦ACTION:.*¦/=resultAction > (/¦to¦/ > (/¦verb¦/ > (/¦and¦/ > /¦[actionToken]¦/)))
+/¦ACTION:.*¦/=resultAction > (/¦be¦/ > (/¦and¦/ $, /¦[actionToken]¦/))
+/¦ACTION:.*¦/=resultAction > (/¦be¦/ << /¦[actionToken]¦/) $, /¦,¦/ !< /¦else¦|¦otherwise¦/
+/¦ACTION:.*¦/=resultAction >> /¦[actionToken]¦/ $, /¦,¦/
+
+#
+/¦ACTION:.*¦/=resultAction > (/¦and¦/ $, (/¦ACTION:.*¦/ < (/¦[actionToken]¦/ < /¦whenever¦/)))
+
+#
+/¦noun¦/=resultNoun > (/¦of¦/ >> (/¦and¦/ >> /¦[actionToken]¦/ << /¦adverb¦|¦adjective¦/=entryNoun !<< /¦ACTION:.*¦/))

@@ -9,7 +9,7 @@ import edu.upc.entities.dm.Decision_Dmn;
 import edu.upc.entities.dm.Input_Dmn;
 import edu.upc.entities.dm.Output_Dmn;
 import edu.upc.entities.dm.Requirement;
-import edu.upc.freelingutils.dm.TypeRef_Table;
+import edu.upc.parserutils.dm.TypeRef_Table;
 
 public class DecisionTableHandler {
 	private LinkedHashMap<String, Requirement> requirements;

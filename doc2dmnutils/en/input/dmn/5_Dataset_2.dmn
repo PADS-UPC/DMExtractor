@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_1qotitm" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.4.0">
+  <inputData id="InputData_0x859x2" name="Age" />
+  <inputData id="InputData_11h5o0k" name="Involved in an accident in the past" />
+  <decision id="Decision_02vw943" name="Car insurance cost">
+    <informationRequirement id="InformationRequirement_1gam0kk">
+      <requiredInput href="#InputData_0x859x2" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0rwxgxx">
+      <requiredInput href="#InputData_11h5o0k" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1tjjb9y">
+      <input id="InputClause_151quk9" label="Age">
+        <inputExpression id="LiteralExpression_0lsuk5v" typeRef="integer">
+          <text>age</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1utrthj" label="Involved in a car accident in the past">
+        <inputExpression id="LiteralExpression_0k0teqx" typeRef="string">
+          <text>involvedinacaraccidentinthepast</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_0y6ub74" label="Car insurance cost" name="carinsurancecost" typeRef="integer" />
+      <rule id="DecisionRule_184mx9p">
+        <inputEntry id="UnaryTests_1az49pq">
+          <text>[16..18]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0pqd7ok">
+          <text>not("car accident")</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0dr85my">
+          <text>600</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0x30upa">
+        <inputEntry id="UnaryTests_1wjqhbm">
+          <text>[16..18]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0jvfrqv">
+          <text>"car accident"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1k5u97m">
+          <text>800</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1djvpgc">
+        <inputEntry id="UnaryTests_0t6c1yq">
+          <text>[19..21]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0dte71m">
+          <text>not("car accident")</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0eudnr7">
+          <text>500</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1twbvvx">
+        <inputEntry id="UnaryTests_0vqalqv">
+          <text>[19..21]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1anjcix">
+          <text>"car accident"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_079bxjd">
+          <text>700</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1puzxca">
+        <inputEntry id="UnaryTests_02ymz93">
+          <text>[22..29]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0nk9rme">
+          <text>not("car accident")</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1cfol3z">
+          <text>450</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_05kzs6j">
+        <inputEntry id="UnaryTests_02xzpu9">
+          <text>[22..29]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0g81hoo">
+          <text>"car accident"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1q3daly">
+          <text>600</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0bnsd47">
+        <inputEntry id="UnaryTests_0qpiuss">
+          <text>[28..50]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0xo7xlj">
+          <text>not("car accident")</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0ngkkvj">
+          <text>400</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_15fau1j">
+        <inputEntry id="UnaryTests_1xkrdzt">
+          <text>[28..50]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0kkx20o">
+          <text>"car accident"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0520nbf">
+          <text>550</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_0t8efrn" dmnElementRef="InputData_0x859x2">
+        <dc:Bounds height="45" width="125" x="217" y="337" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1ogc1qv" dmnElementRef="InformationRequirement_1gam0kk">
+        <di:waypoint x="280" y="337" />
+        <di:waypoint x="370" y="250" />
+        <di:waypoint x="370" y="230" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0l21n65" dmnElementRef="InputData_11h5o0k">
+        <dc:Bounds height="45" width="125" x="407" y="337" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_05cyfq1" dmnElementRef="InformationRequirement_0rwxgxx">
+        <di:waypoint x="470" y="337" />
+        <di:waypoint x="430" y="250" />
+        <di:waypoint x="430" y="230" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1p585k1" dmnElementRef="Decision_02vw943">
+        <dc:Bounds height="80" width="180" x="310" y="150" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

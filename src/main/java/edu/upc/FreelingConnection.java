@@ -4,15 +4,16 @@ import java.io.IOException;
 import clojure.java.api.Clojure;
 import clojure.lang.ILookup;
 import clojure.lang.Keyword;
-import edu.upc.freelingutils.Language;
-import edu.upc.freelingutils.dm.DmnFilesUrl;
-import edu.upc.freelingutils.dm.DmnFreelingUtils;
 import edu.upc.nlp4bpm_commons.Cache;
 import edu.upc.nlp4bpm_commons.FreelingAPI;
+import edu.upc.parserutils.FilesUrl;
+import edu.upc.parserutils.Language;
+import edu.upc.parserutils.dm.DmnFilesUrl;
+import edu.upc.parserutils.dm.DmnFreelingUtils;
 
 public class FreelingConnection {
 
-	private String cacheUrl = DmnFilesUrl.FREELING_CACHE_FILE.toString();
+	private String cacheUrl = FilesUrl.FREELING_CACHE_FILE.toString();
 
 	public String getJsonString(String text) throws IOException {
 		System.out.println("Connecting to Freeling...");

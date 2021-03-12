@@ -16,9 +16,9 @@ import edu.upc.entities.Agent;
 import edu.upc.entities.Patient;
 import edu.upc.entities.Predicate;
 import edu.upc.entities.Token;
-import edu.upc.freelingutils.ActionType;
-import edu.upc.freelingutils.FilesUrl;
-import edu.upc.freelingutils.FreelingUtils;
+import edu.upc.parserutils.ActionType;
+import edu.upc.parserutils.FilesUrl;
+import edu.upc.parserutils.FreelingUtils;
 
 public class PatternsHandler {
 	private LinkedHashMap<String, Predicate> predicates;

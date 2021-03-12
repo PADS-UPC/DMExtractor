@@ -17,11 +17,11 @@ import edu.upc.entities.dm.InputEntry_Rule;
 import edu.upc.entities.dm.Input_Dmn;
 import edu.upc.entities.dm.Requirement;
 import edu.upc.entities.dm.Rule_Table;
-import edu.upc.freelingutils.ActionType;
 import edu.upc.handler.LangHandler;
 import edu.upc.handler.PatternsHandler;
 import edu.upc.handler.dm.DmPatternsHandler;
 import edu.upc.handler.dm.DmTreesHandler;
+import edu.upc.parserutils.ActionType;
 
 public class DmParser {
 	private LinkedHashMap<String, Activity> dmnActivitiesList;

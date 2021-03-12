@@ -1,0 +1,14 @@
+If the order is above 5 units, the discount is 5%, otherwise the discount is 2%.
+
+A discount of 4% and otherwise 9% is given when the order exceeds 10 units.
+
+When the financial situation is good, the applicant risk rating is low, else applicant risk is high.
+
+If the financial situation is moderate, the risk level is medium and otherwise low.
+
+If the score is 10, the service request is a product change, otherwise the service request is a bug.
+
+In case the score is 5, then the service request is a bug, otherwise the service request is a product change.
+
+
+

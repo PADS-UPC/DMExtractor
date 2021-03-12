@@ -1,6 +1,6 @@
 package edu.upc.entities.dm;
 
-import edu.upc.freelingutils.dm.TypeRef_Table;
+import edu.upc.parserutils.dm.TypeRef_Table;
 
 public class Output_Dmn {
 

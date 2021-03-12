@@ -1,0 +1,7 @@
+/¦noun|adjective¦/=result > (/¦and|or¦/ >> /¦[inputDataToken]¦/)
+/¦noun¦/=result $, (/¦,¦/ >> /¦[inputDataToken]¦/)
+#join with:
+/¦noun¦/=result $, (/¦also¦/ >> /¦[inputDataToken]¦/)
+#
+/¦noun¦/=result < (/¦,¦/ >> /¦[inputDataToken]¦/)
+

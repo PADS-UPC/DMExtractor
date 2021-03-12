@@ -1,0 +1,7 @@
+Prepayment is defined by the loyal customer and the OrderAmount.
+
+A loyal customer is defined as such by his AnnualSales and his Customeryears.
+
+Prepayment is not required for loyal customers when the OrderAmount is small.
+
+A loyal customer is defined as such if his AnnualSales is high and his Customeryears is more than 5.

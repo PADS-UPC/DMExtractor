@@ -1,4 +1,4 @@
-package edu.upc.freelingutils.dm;
+package edu.upc.parserutils.dm;
 
 public enum TypeRef_Table {
 	STRING("string"), 

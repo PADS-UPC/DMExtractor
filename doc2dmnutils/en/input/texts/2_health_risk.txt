@@ -1,0 +1,16 @@
+The health risk level of a patient should be assessed from the obesity level, waist circumference and the sex of the patient.
+
+
+Furthermore, the obesity level should be determined from the BMI value and sex of the patient.
+
+
+Patient's height and weight are considered to calculate his BMI value.
+
+
+If the patient's sex is male and his BMI value is between 25 and 29.9, then his obesity level is normal.
+
+
+If the patient's sex is female and the BMI value is above 25.0 and less than 30, then the obesity level is overweight.
+
+
+Where as, if the BMI value is 30.0 or higher, the obesity level falls within the obese 1 range.

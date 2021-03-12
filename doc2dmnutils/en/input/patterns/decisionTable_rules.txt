@@ -1,0 +1,73 @@
+#if
+/¦ACTION:t.*¦/=decisionAction > (/¦be¦|¦MD¦/ < (/¦if¦/ < /¦ACTION:.*¦/=inputAction)) !< /¦otherwise¦|¦else¦/ !<< /¦and¦/
+/¦ACTION:t.*¦/=decisionAction > (/¦be¦|¦MD¦/ < (/¦if¦/ < (/¦be¦|¦have¦/ < /¦ACTION:.*¦/=inputAction)))
+
+/¦ACTION:t.*¦/=decisionAction > (/¦be¦/ > (/¦be¦|¦MD¦/ < (/¦if¦/ < /¦ACTION:.*¦/=inputAction)))
+
+/¦ACTION:t.*¦/=decisionAction < (/¦if¦/ < /¦ACTION:.*¦/=inputAction)
+/¦ACTION:t.*¦/=decisionAction < (/¦if¦/ < (/¦be¦|¦do¦|¦have¦/ < /¦ACTION:.*¦/=inputAction))
+
+/¦ACTION:t.*¦/=decisionAction > (/¦be¦/ > (/¦to¦/ > (/¦verb¦/  < (/¦if¦/ < /¦ACTION:.*¦/=inputAction))))
+/¦ACTION:t.*¦/=decisionAction > (/¦be¦/ > (/¦to¦/ > (/¦verb¦/  < (/¦if¦/ < (/¦be¦|¦have¦/ < /¦ACTION:.*¦/=inputAction)))))
+
+/¦ACTION:t.*¦/=decisionAction > (/¦to¦/ > (/¦verb¦/ < (/¦if¦/ < /¦ACTION:t.*¦/=inputAction)))
+
+# OR
+/¦ACTION:t.*¦/=decisionAction < (/¦if¦/ << (/¦or¦/ < /¦ACTION:.*¦/=inputAction))
+/¦ACTION:t.*¦/=decisionAction < (/¦if¦/=condition << (/¦or¦/ < /¦adjective¦|¦number¦|¦noun¦/=inputNoun))
+
+/¦noun¦/=decisionNoun >, (/¦be¦/ < (/¦if¦/ < /¦ACTION:.*¦/=inputAction)) !> /¦ACTION:.*¦/
+
+#otherwise
+/¦ACTION:t.*¦/=decisionAction > (/¦verb¦/ < (/¦if¦/ < /¦ACTION:t.*¦/=inputAction)) < /¦otherwise¦|¦else¦/=negation
+/¦adjective¦/=decisionNoun >> (/¦ACTION:.*¦/ < (/¦if¦/ < /¦ACTION:.*¦/=inputAction)) < (/¦otherwise¦/=negation)
+/¦ACTION:t.*¦/=decisionAction > (/¦verb¦/ < (/¦if¦/ < /¦ACTION:t.*¦/=inputAction))  $, /¦otherwise¦/=negation
+#tree
+/¦ACTION:t.*¦/=decisionAction > (/¦noun¦/ > (/¦verb¦/ < (/¦if¦/ < /¦ACTION:t.*¦/=inputAction) ) ) $, /¦otherwise¦/=negation
+
+#
+/¦ACTION:t.*¦/=decisionAction  > (/¦be¦|¦MD¦/ < (/¦in_case¦/ < /¦ACTION:.*¦/=inputAction)) < /¦otherwise¦/=negation
+
+
+# Whenever the day is Monday and the weather is rainy, vegetable sandwiches are to be made.
+/¦ACTION:t.*¦/=decisionAction > (/¦be¦/ > (/¦to¦/ > (/¦verb¦/ < (/¦ACTION:.*¦/=inputAction < /¦whenever¦/))))
+# A discount of 10% is given whenever the order exceeds 10 units.
+/¦ACTION:t.*¦/=decisionAction < (/¦ACTION:.*¦/=inputAction < /¦whenever¦/)
+# TODO variant of whenever
+#
+#in case of rainy weather on Tuesday, tomato sandwiches need to be made.
+/¦ACTION:t.*¦/=decisionAction < (/¦in_case¦/ < /¦ACTION:.*¦/=inputAction)
+/¦ACTION:t.*¦/=decisionAction  > (/¦be¦|¦MD¦/ < (/¦in_case¦/ < /¦ACTION:.*¦/=inputAction)) !< /¦otherwise¦/
+
+
+/¦ACTION:t.*¦/=decisionAction < (/¦in_case¦/ < (/¦preposition¦/ < /¦ACTION:.*¦/=inputAction))
+
+#when
+/¦ACTION:t.*¦/=decisionAction < (/¦ACTION:t.*¦/=inputAction < /¦when¦/)
+/¦ACTION:t.*¦/=decisionAction > (/¦be¦/ < (/¦ACTION:t.*¦/=inputAction < /¦when¦/)) < /¦else¦/=negation
+
+# When the age is between 28 and 50 years old and the person was involved in a car accident, car insurance cost is 550 euros.
+/¦ACTION:t.*¦/=inputAction > (/¦be¦/ < /¦number¦/=decisionNoun) < /¦when¦/
+
+#in case of rainy weather on Tuesday...
+/¦ACTION:t.*¦/=decisionAction > (/¦be¦/ > (/¦to¦/ > (/¦verb¦/ < (/¦noun¦/ < (/¦in_case¦/ < (/¦of¦/ < /¦noun¦/=inputNoun))))))
+/¦ACTION:t.*¦/=decisionAction > (/¦be¦/ > (/¦to¦/ > (/¦verb¦/ < (/¦noun¦/ < (/¦in_case¦/ < (/¦on¦/ < /¦date¦/=inputNoun))))))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

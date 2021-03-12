@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_038vt3x" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.4.0">
+  <inputData id="InputData_0iqxg45" name="Service request" />
+  <inputData id="InputData_1t2ih1e" name="Customer&#39;s phase" />
+  <decision id="Decision_057lvpu" name="Cost">
+    <informationRequirement id="InformationRequirement_1mlidnt">
+      <requiredInput href="#InputData_0iqxg45" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_07xt00u">
+      <requiredInput href="#InputData_1t2ih1e" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1xm65e1">
+      <input id="InputClause_0naxmci" label="Customer&#39;s phase">
+        <inputExpression id="LiteralExpression_0hpofxr" typeRef="string">
+          <text>customersphase</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0j1prlk" label="Service request">
+        <inputExpression id="LiteralExpression_15j5z12" typeRef="string">
+          <text>Servicerequest</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_1eycka1" label="Cost" name="cost" typeRef="integer" />
+      <rule id="DecisionRule_1ycukd3">
+        <inputEntry id="UnaryTests_0tn1gfu">
+          <text>"testing"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0q2jf8l">
+          <text>"change"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0p0z3l7">
+          <text>600</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1wlhyie">
+        <inputEntry id="UnaryTests_0wqb59h">
+          <text>"testing"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0daze7h">
+          <text>"bug"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0z13q3g">
+          <text>0</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1eky9lc">
+        <inputEntry id="UnaryTests_15y5hma">
+          <text>"development"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0v07jxd">
+          <text>"change"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_17ejw49">
+          <text>150</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_13p3gn6">
+        <inputEntry id="UnaryTests_141ip7e">
+          <text>"testing"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1tums1l">
+          <text>"bug"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1px38ek">
+          <text>0</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0tgs146">
+        <inputEntry id="UnaryTests_0fsr3pa">
+          <text>"maintenance"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_01sa96c">
+          <text>"change"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1k3r78m">
+          <text>100</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1kl9k7p">
+        <inputEntry id="UnaryTests_0y06szc">
+          <text>"maintenance"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0prqibz">
+          <text>"bug"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0ibt9pt">
+          <text>50</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_05gytns" dmnElementRef="InputData_0iqxg45">
+        <dc:Bounds height="45" width="125" x="157" y="317" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_02i5bkt" dmnElementRef="InformationRequirement_1mlidnt">
+        <di:waypoint x="220" y="317" />
+        <di:waypoint x="300" y="210" />
+        <di:waypoint x="300" y="190" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_18rrwa9" dmnElementRef="InputData_1t2ih1e">
+        <dc:Bounds height="45" width="125" x="357" y="317" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_107j1j5" dmnElementRef="InformationRequirement_07xt00u">
+        <di:waypoint x="420" y="317" />
+        <di:waypoint x="360" y="210" />
+        <di:waypoint x="360" y="190" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0gxu6nd" dmnElementRef="Decision_057lvpu">
+        <dc:Bounds height="80" width="180" x="240" y="110" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

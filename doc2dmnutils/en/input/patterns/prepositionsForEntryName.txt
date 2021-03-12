@@ -1,0 +1,10 @@
+# It will be compared with lemma
+between
+above
+in
+on
+with
+within
+of
+>
+<

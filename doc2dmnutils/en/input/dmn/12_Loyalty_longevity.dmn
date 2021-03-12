@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_197jo75" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.3.0">
+  <inputData id="InputData_09n5swt" name="Client" />
+  <inputData id="InputData_1yv1g6k" name="Longevity" />
+  <decision id="Decision_1xpwl3i" name="Discount">
+    <informationRequirement id="InformationRequirement_0wsga7z">
+      <requiredInput href="#InputData_09n5swt" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1eu9gfh">
+      <requiredInput href="#InputData_1yv1g6k" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_111wj1e">
+      <requiredInput href="#InputData_03vxf1g" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_04aas0h">
+      <input id="InputClause_024j7ot" label="Client">
+        <inputExpression id="LiteralExpression_0wul3sc" typeRef="string">
+          <text>client</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0mfec5h" label="Longevity">
+        <inputExpression id="LiteralExpression_0iz3uwn" typeRef="integer">
+          <text>longevity</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0984nrf" label="Age">
+        <inputExpression id="LiteralExpression_1b3y81t" typeRef="integer">
+          <text>ageyear</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_1ijh76e" label="Discount" name="discount" typeRef="string" />
+      <rule id="DecisionRule_1h74xy3">
+        <inputEntry id="UnaryTests_0q9zh14">
+          <text>"loyal"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0oig7w6">
+          <text>&gt;=5</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0fyvely">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0vr51kh">
+          <text>"12%"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1w376pl">
+        <inputEntry id="UnaryTests_1dytfd3">
+          <text>"loyal"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1gsqnk5">
+          <text>&lt;5</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0rc31yr">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1hhp3hg">
+          <text>"6%"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_03cr6hb">
+        <inputEntry id="UnaryTests_1uxmi30">
+          <text>not("loyalty")</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_14oivtx">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1fohy07">
+          <text>&gt;=65</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1g68lv1">
+          <text>"5%"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1qr57uz">
+        <inputEntry id="UnaryTests_14xtbbf">
+          <text>"loyalty"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1onjhee">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0f6uokg">
+          <text>&lt;65</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_14wr1os">
+          <text>"3%"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_03vxf1g" name="Age" />
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_0qxauhx" dmnElementRef="InputData_09n5swt">
+        <dc:Bounds height="45" width="125" x="177" y="197" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_10gz055" dmnElementRef="InformationRequirement_0wsga7z">
+        <di:waypoint x="240" y="197" />
+        <di:waypoint x="335" y="180" />
+        <di:waypoint x="335" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0vbbg99" dmnElementRef="InputData_1yv1g6k">
+        <dc:Bounds height="45" width="125" x="317" y="197" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0hdktn7" dmnElementRef="InformationRequirement_1eu9gfh">
+        <di:waypoint x="380" y="197" />
+        <di:waypoint x="380" y="180" />
+        <di:waypoint x="380" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1jq8igb" dmnElementRef="Decision_1xpwl3i">
+        <dc:Bounds height="80" width="180" x="290" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0tiosfr" dmnElementRef="InputData_03vxf1g">
+        <dc:Bounds height="45" width="125" x="457" y="197" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_19e58qy" dmnElementRef="InformationRequirement_111wj1e">
+        <di:waypoint x="520" y="197" />
+        <di:waypoint x="425" y="180" />
+        <di:waypoint x="425" y="160" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

@@ -3,7 +3,7 @@ package edu.upc.handler;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import edu.upc.freelingutils.Language;
+import edu.upc.parserutils.Language;
 
 public class LangHandler {
 	static private final ArrayList<String> LANGS = new ArrayList<>(Arrays.asList("en", "es"));

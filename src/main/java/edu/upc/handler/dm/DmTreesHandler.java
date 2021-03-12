@@ -12,8 +12,8 @@ import edu.stanford.nlp.trees.Tree;
 import edu.upc.entities.Token;
 import edu.upc.entities.dm.Decision_Dmn;
 import edu.upc.entities.dm.InputData_Dmn;
-import edu.upc.freelingutils.dm.DmnFilesUrl;
-import edu.upc.freelingutils.dm.DmnFreelingUtils;
+import edu.upc.parserutils.dm.DmnFilesUrl;
+import edu.upc.parserutils.dm.DmnFreelingUtils;
 import edu.upc.entities.Activity;
 
 public class DmTreesHandler {

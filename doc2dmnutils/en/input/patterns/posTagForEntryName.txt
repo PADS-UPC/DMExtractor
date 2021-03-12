@@ -1,0 +1,7 @@
+#include:
+noun
+adjective
+number
+adverb
+date
+verb

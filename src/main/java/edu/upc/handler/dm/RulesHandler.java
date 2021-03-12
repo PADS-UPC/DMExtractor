@@ -21,10 +21,10 @@ import edu.upc.entities.dm.InputEntry_Rule;
 import edu.upc.entities.dm.Input_Dmn;
 import edu.upc.entities.dm.OutputEntry_Rule;
 import edu.upc.entities.dm.Rule_Table;
-import edu.upc.freelingutils.ActionType;
-import edu.upc.freelingutils.dm.DmnFilesUrl;
-import edu.upc.freelingutils.dm.DmnFreelingUtils;
-import edu.upc.freelingutils.dm.TypeRef_Table;
+import edu.upc.parserutils.ActionType;
+import edu.upc.parserutils.dm.DmnFilesUrl;
+import edu.upc.parserutils.dm.DmnFreelingUtils;
+import edu.upc.parserutils.dm.TypeRef_Table;
 
 public class RulesHandler {
 	private LinkedHashMap<String, Token> tokens;
@@ -53,7 +53,7 @@ public class RulesHandler {
 
 	public LinkedHashMap<String, DecisionTable_Dmn> ExtractRules() throws IOException {
 		// Remove weak actions
-		activitiesList= DmnFreelingUtils.removeActions(trees,tokens,activitiesList);
+		activitiesList = DmnFreelingUtils.removeActions(trees, tokens, activitiesList);
 
 		ArrayList<String> patternStrList = DmnFreelingUtils.readPatternFile(DmnFilesUrl.DECISIONTABLE_RULES.toString());
 		LinkedHashMap<String, InputEntry_Rule> inputEntries = new LinkedHashMap<String, InputEntry_Rule>();
@@ -142,23 +142,25 @@ public class RulesHandler {
 													decisionTableTmp = decisionTable;
 												}
 											}
-										} else if (inputData.getValue().getDrgElement().getName()
-												.contains(inputEntry.getValue().getText())) {
-											String name = inputEntry.getValue().getText();
-											Input_Dmn input = new Input_Dmn(inputEntry.getKey(), name,
-													name.replaceAll("[^A-Za-z0-9]", "").toLowerCase(),
-													TypeRef_Table.BOOLEAN);
-											inputEntry.getValue().setInput(input);
-											inputEntry.getValue().setText("true");
+										} else if (inputEntry.getValue().getText() != null) {
+											if (inputData.getValue().getDrgElement().getName()
+													.contains(inputEntry.getValue().getText())) {
+												String name = inputEntry.getValue().getText();
+												Input_Dmn input = new Input_Dmn(inputEntry.getKey(), name,
+														name.replaceAll("[^A-Za-z0-9]", "").toLowerCase(),
+														TypeRef_Table.BOOLEAN);
+												inputEntry.getValue().setInput(input);
+												inputEntry.getValue().setText("true");
 
-											decisionTable = findDecisionTableWithName(
-													inputData.getValue().getDecision());
-											addRuleToDecisionTable(decisionTable, decisionActionToken,
-													decisionNounToken, inputEntries);
+												decisionTable = findDecisionTableWithName(
+														inputData.getValue().getDecision());
+												addRuleToDecisionTable(decisionTable, decisionActionToken,
+														decisionNounToken, inputEntries);
 
-											inputEntries = new LinkedHashMap<String, InputEntry_Rule>();
-											found = true;
-											break;
+												inputEntries = new LinkedHashMap<String, InputEntry_Rule>();
+												found = true;
+												break;
+											}
 										}
 									}
 								}
@@ -301,5 +303,4 @@ public class RulesHandler {
 		return decision;
 	}
 
-	
 }

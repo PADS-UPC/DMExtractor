@@ -12,8 +12,8 @@ import edu.upc.entities.PredicateArgument;
 import edu.upc.entities.Token;
 import edu.upc.entities.dm.DecisionTable_Dmn;
 import edu.upc.entities.dm.OutputEntry_Rule;
-import edu.upc.freelingutils.dm.DmnFreelingUtils;
-import edu.upc.freelingutils.dm.TypeRef_Table;
+import edu.upc.parserutils.dm.DmnFreelingUtils;
+import edu.upc.parserutils.dm.TypeRef_Table;
 
 public class OutputEntryHandler {
 	private LinkedHashMap<String, Activity> activitiesList;

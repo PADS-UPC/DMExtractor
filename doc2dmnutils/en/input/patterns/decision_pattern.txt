@@ -1,0 +1,32 @@
+# Patient's height and weight are considered to [calculate] his BMI value.
+/¦[decisionVerb]¦/=decisionAction > (/¦to¦/ > /¦ACTION:t.*¦/=inputAction)
+
+# Patient's height [determines] his BMI value
+/¦[decisionVerb]¦/=decisionAction < (/¦noun/=inputData << /¦'s¦/) !<< /¦when¦/ !>> /¦if¦/
+
+# Physical health score of a patient [determines] health evaluation criteria.
+/¦[decisionVerb]¦/=decisionAction < (/¦noun/=inputData < (/¦of¦/ < /¦noun¦|¦number¦/)) !>> /¦if¦/ !<< /¦if¦/ !>> /¦ACTION:.*¦/
+
+#
+/¦[decisionVerb]¦/=decisionAction < (/¦from¦/ < /¦noun¦/=inputData) > /¦be¦/
+
+#
+/¦[decisionVerb]¦/=decisionAction < (/¦from|by¦/ < /¦ACTION:t.*¦/=inputAction)
+
+# Prepayment is defined by the loyal customer and the OrderAmount.
+/¦[decisionVerb]¦/=decisionAction < (/¦by¦/ < /¦noun¦/=inputData)
+
+# Prepayment is not required for loyal customers when the OrderAmount is small.
+# Physical health score of a patient is considered for health evaluation criteria.
+# The menu will depend on the day of the week and the current weather.
+/¦[decisionVerb]¦/=decisionAction < (/¦for¦|¦on¦/ < /¦noun¦/=inputData) >> /¦verb¦/ !>> /¦if¦/
+# In the following fragment, car insurance cost will be specified depending on age and whether the person was involved in an accident in the past.
+/¦[decisionVerb]¦/=decisionAction << (/¦on¦/ < /¦noun¦/=inputData) > (/¦verb¦/ > /¦MD¦/)
+/¦[decisionVerb]¦/=decisionAction > (/¦verb¦/ > /¦MD¦/ $. (/¦and¦/ << /¦ACTION:.*¦/=inputAction))
+
+
+
+
+
+
+

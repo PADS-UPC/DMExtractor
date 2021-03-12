@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_1csdpbm" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.3.0">
+  <inputData id="InputData_1uon9di" name="Student" />
+  <decision id="Decision_0fbx3ts" name="Right of having a special permit">
+    <informationRequirement id="InformationRequirement_1rvq7hc">
+      <requiredInput href="#InputData_1uon9di" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1evmdtg">
+      <input id="InputClause_0y6sl5w" label="Student" biodi:width="250">
+        <inputExpression id="LiteralExpression_07eklap" typeRef="string">
+          <text>student</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_1ck8yli" label="Special permit" name="rightofhavingaspecialpermit" typeRef="string" biodi:width="337" />
+      <rule id="DecisionRule_00w373p">
+        <inputEntry id="UnaryTests_0hj81zr">
+          <text>"commute"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0ii3xcy">
+          <text>"right of a permit"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1vkgev5">
+        <inputEntry id="UnaryTests_1qbrmk8">
+          <text>not("commute")</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0960v19">
+          <text>not("right of a permit")</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_1bvhbk7" dmnElementRef="InputData_1uon9di">
+        <dc:Bounds height="45" width="125" x="187" y="217" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0wha2r0" dmnElementRef="InformationRequirement_1rvq7hc">
+        <di:waypoint x="250" y="217" />
+        <di:waypoint x="250" y="180" />
+        <di:waypoint x="250" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1fe8a4w" dmnElementRef="Decision_0fbx3ts">
+        <dc:Bounds height="80" width="180" x="160" y="80" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

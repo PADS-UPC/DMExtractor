@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_0h2fq01" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.4.0">
+  <inputData id="InputData_0bjwx78" name="day" />
+  <inputData id="InputData_1d9yux7" name="weather" />
+  <decision id="Decision_1gra250" name="menu">
+    <informationRequirement id="InformationRequirement_1g9qgvq">
+      <requiredInput href="#InputData_0bjwx78" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_13nyjd5">
+      <requiredInput href="#InputData_1d9yux7" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0ow4stq">
+      <input id="InputClause_1py9upb" label="Day">
+        <inputExpression id="LiteralExpression_1mupjw4" typeRef="string">
+          <text>day</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1e2j40q" label="Weather">
+        <inputExpression id="LiteralExpression_19amw6l" typeRef="string">
+          <text>weather</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_1y3a7wr" label="Menu" name="menu" typeRef="string" />
+      <rule id="DecisionRule_0enbnzu">
+        <inputEntry id="UnaryTests_1x7bcvp">
+          <text>"Monday"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0vx45kg">
+          <text>"rainy"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1uac5qb">
+          <text>"vegetable sandwiches"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_01vqdtq">
+        <inputEntry id="UnaryTests_0qi6duo">
+          <text>"Monday"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1lubp16">
+          <text>"sunny"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1ylxzdc">
+          <text>"cheese sandwiches"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_14a0e14">
+        <inputEntry id="UnaryTests_0yg47ul">
+          <text>"Tuesday"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0cuqa0b">
+          <text>"rainy"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_13qb7wo">
+          <text>"herb sandwiches"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_04f2acm">
+        <inputEntry id="UnaryTests_08lxbfi">
+          <text>"Tuesday"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1wghjay">
+          <text>"rainy"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1ea25gt">
+          <text>"tomato sandwiches"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_02xkoew">
+        <inputEntry id="UnaryTests_0pik861">
+          <text>"Wednesday"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0ry4k97">
+          <text>"sunny"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_02uem0n">
+          <text>"ceasar sandwiches"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_14clt85">
+        <inputEntry id="UnaryTests_0o178i5">
+          <text>"Wednesday"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_00gu5mw">
+          <text>"rainy"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_05w5ccr">
+          <text>"fish-salad sandwiches"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0jusyzo">
+        <inputEntry id="UnaryTests_1wg7djk">
+          <text>"Thursday"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1gzobht">
+          <text>"sunny"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1u03anq">
+          <text>"Tuscany sandwiches"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_09pqe3q">
+        <inputEntry id="UnaryTests_1oixug2">
+          <text>"Thursday"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_190nwij">
+          <text>"rainy"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0coqwpz">
+          <text>"Tropical sandwiches"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_04bikoh">
+        <inputEntry id="UnaryTests_134f1db">
+          <text>"Friday"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0cdibv8">
+          <text>"sunny"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0teh543">
+          <text>"ham sandwiches"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0k24po7">
+        <inputEntry id="UnaryTests_0b4dqye">
+          <text>"Friday"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_06d267c">
+          <text>"rainy"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1mipug1">
+          <text>"egg-salad sandwiches"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_1qzturs" dmnElementRef="InputData_0bjwx78">
+        <dc:Bounds height="45" width="125" x="357" y="417" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1viak13" dmnElementRef="InformationRequirement_1g9qgvq">
+        <di:waypoint x="420" y="417" />
+        <di:waypoint x="520" y="280" />
+        <di:waypoint x="520" y="260" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0s6s8yj" dmnElementRef="InputData_1d9yux7">
+        <dc:Bounds height="45" width="125" x="557" y="417" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1pct57h" dmnElementRef="InformationRequirement_13nyjd5">
+        <di:waypoint x="620" y="417" />
+        <di:waypoint x="580" y="280" />
+        <di:waypoint x="580" y="260" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1ei41wq" dmnElementRef="Decision_1gra250">
+        <dc:Bounds height="80" width="180" x="460" y="180" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

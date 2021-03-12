@@ -1,0 +1,24 @@
+It is important that, as a university sandwich-stand, we provide our students with a variety of sandwiches to choose from.
+
+The menu will depend on the day of the week and the current weather.
+
+Whenever the day is Monday and the weather is rainy, vegetable sandwiches are to be made.
+
+On the other hand, if the day is Monday and the weather appears to be sunny, then cheese sandwiches need to be made.
+
+If the day is Tuesday and the weather is rainy, herb sandwiches need to be prepared.
+
+On the other hand, in case of rainy weather on Tuesday, tomato sandwiches need to be made.
+
+Whenever the day is Wednesday and the weather is sunny, ceasar sandwiches need to be made.
+
+Further, if the day is Wednesday and the weather is rainy on the other hand, fish-salad sandwiches need to be made.
+
+Tuscany sandwiches need to be made when the day is Thursday and the weather is sunny.
+
+Tropical sandwiches need to made whenever the day is Thursday and the weather is rainy.
+
+At last, whenever the day is Friday and the weather is sunny, ham sandwiches need to be made.
+
+If the day is Friday and the weather is rainy on the other hand, egg-salad sandwiches need to be made.
+

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:camunda="http://camunda.org/schema/1.0/dmn" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_02vh44h" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.4.0">
+  <decision id="Decision_1j3ujjq" name="Health risk level">
+    <informationRequirement id="InformationRequirement_11e4fml">
+      <requiredInput href="#InputData_1cbfhsy" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0d87tth">
+      <requiredInput href="#InputData_1dz5jah" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_02c9mzd">
+      <requiredDecision href="#Decision_16gpkkd" />
+    </informationRequirement>
+  </decision>
+  <inputData id="InputData_1cbfhsy" name="Waist circumference" />
+  <inputData id="InputData_1dz5jah" name="sex" />
+  <decision id="Decision_05buwgk" name="BMI value">
+    <informationRequirement id="InformationRequirement_01jl9l9">
+      <requiredInput href="#InputData_1mh3n1i" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_10a1081">
+      <requiredInput href="#InputData_0kfbksm" />
+    </informationRequirement>
+  </decision>
+  <inputData id="InputData_1mh3n1i" name="Height" />
+  <inputData id="InputData_0kfbksm" name="Weight" />
+  <decision id="Decision_16gpkkd" name="Obesity level">
+    <informationRequirement id="InformationRequirement_098aswb">
+      <requiredDecision href="#Decision_05buwgk" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1u821s6">
+      <requiredInput href="#InputData_1dz5jah" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_12a5gox">
+      <input id="InputClause_0vbe0b8" label="Sex">
+        <inputExpression id="LiteralExpression_0l1tm1n" typeRef="string">
+          <text>sex</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0wwmvja" label="BMI value" camunda:inputVariable="bmivalue">
+        <inputExpression id="LiteralExpression_1u225vx" typeRef="double">
+          <text>bmivalue</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_1hv61hd" label="Obesity level" name="obesitylevel" typeRef="string" />
+      <rule id="DecisionRule_1l45pwd">
+        <inputEntry id="UnaryTests_1xkty01">
+          <text>"male"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_16jpjgd">
+          <text>[25..29.9]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_03ciixt">
+          <text>"normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0q7f7cs">
+        <inputEntry id="UnaryTests_1xk9zea">
+          <text>"female"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0d4p7q4">
+          <text>[25..30]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0zmitid">
+          <text>"overweight"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0b3sej7">
+        <inputEntry id="UnaryTests_0zx60hu">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_10fjmr2">
+          <text>&gt;30.0</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0ti3mye">
+          <text>"obese 1 range"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_0sc6iu7" dmnElementRef="Decision_1j3ujjq">
+        <dc:Bounds height="80" width="180" x="360" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0cie7ee" dmnElementRef="InputData_1cbfhsy">
+        <dc:Bounds height="45" width="125" x="567" y="247" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0lctvpi" dmnElementRef="InformationRequirement_11e4fml">
+        <di:waypoint x="630" y="247" />
+        <di:waypoint x="495" y="180" />
+        <di:waypoint x="495" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_09usk0e" dmnElementRef="InputData_1dz5jah">
+        <dc:Bounds height="45" width="125" x="157" y="247" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0x350e6" dmnElementRef="InformationRequirement_0d87tth">
+        <di:waypoint x="220" y="247" />
+        <di:waypoint x="405" y="180" />
+        <di:waypoint x="405" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0hjv6h8" dmnElementRef="InformationRequirement_02c9mzd">
+        <di:waypoint x="450" y="230" />
+        <di:waypoint x="450" y="180" />
+        <di:waypoint x="450" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1rkcyst" dmnElementRef="Decision_05buwgk">
+        <dc:Bounds height="80" width="180" x="360" y="360" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_08ka8lj" dmnElementRef="InformationRequirement_098aswb">
+        <di:waypoint x="450" y="360" />
+        <di:waypoint x="450" y="330" />
+        <di:waypoint x="450" y="310" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_11z6m3y" dmnElementRef="InputData_1mh3n1i">
+        <dc:Bounds height="45" width="125" x="317" y="487" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0xl4dnd" dmnElementRef="InformationRequirement_01jl9l9">
+        <di:waypoint x="380" y="487" />
+        <di:waypoint x="420" y="460" />
+        <di:waypoint x="420" y="440" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1qtbiyp" dmnElementRef="InputData_0kfbksm">
+        <dc:Bounds height="45" width="125" x="457" y="487" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0gmm5sp" dmnElementRef="InformationRequirement_10a1081">
+        <di:waypoint x="520" y="487" />
+        <di:waypoint x="480" y="460" />
+        <di:waypoint x="480" y="440" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0g9mrn2" dmnElementRef="InformationRequirement_1u821s6">
+        <di:waypoint x="282" y="270" />
+        <di:waypoint x="340" y="270" />
+        <di:waypoint x="360" y="270" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0vn9ajs" dmnElementRef="Decision_16gpkkd">
+        <dc:Bounds height="80" width="180" x="360" y="230" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

@@ -11,9 +11,9 @@ import edu.stanford.nlp.trees.tregex.TregexMatcher;
 import edu.stanford.nlp.trees.tregex.TregexPattern;
 import edu.upc.entities.Activity;
 import edu.upc.entities.Token;
-import edu.upc.freelingutils.dm.DmnFilesUrl;
-import edu.upc.freelingutils.dm.DmnFreelingUtils;
-import edu.upc.freelingutils.dm.TypeRef_Table;
+import edu.upc.parserutils.dm.DmnFilesUrl;
+import edu.upc.parserutils.dm.DmnFreelingUtils;
+import edu.upc.parserutils.dm.TypeRef_Table;
 
 public class Functions {
 	private ArrayList<String> posTagForEntryName;
@@ -108,6 +108,7 @@ public class Functions {
 			// patterns.add("/¦number¦/=number1 >> (/¦" + operatorToken + "¦/ !<<
 			// /¦and¦|¦or¦/)");
 			patterns.add("/¦number¦.*¦.*¦/=number1 >> /¦" + operatorToken + "¦/ !<< /¦and¦|¦or¦/ !>> /¦and¦|¦or¦/");
+			patterns.add("/¦number¦.*¦.*¦/=number1 < /¦" + operatorToken + "¦/ < /¦than¦/");
 			String[] numbers = getTextFromTwoNumbers(patterns);
 			if (numbers != null) {
 				if (numbers.length == 1) {

@@ -1,4 +1,4 @@
-package edu.upc.freelingutils;
+package edu.upc.parserutils;
 
 import java.io.BufferedReader;
 import java.io.File;

@@ -12,7 +12,7 @@ import edu.upc.entities.Patient;
 import edu.upc.entities.Predicate;
 import edu.upc.entities.PredicateArgument;
 import edu.upc.entities.Token;
-import edu.upc.freelingutils.FreelingUtils;
+import edu.upc.parserutils.FreelingUtils;
 
 public class ActionHandler {
 	private LinkedHashMap<String, Activity> activitiesList;

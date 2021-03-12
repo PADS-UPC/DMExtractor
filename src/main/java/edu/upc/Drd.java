@@ -25,9 +25,9 @@ import edu.upc.entities.dm.InputEntry_Rule;
 import edu.upc.entities.dm.Input_Dmn;
 import edu.upc.entities.dm.Requirement;
 import edu.upc.entities.dm.Rule_Table;
-import edu.upc.freelingutils.dm.DmnFoldersUrl;
-import edu.upc.freelingutils.dm.DmnFreelingUtils;
-import edu.upc.freelingutils.dm.TypeRef_Table;
+import edu.upc.parserutils.FoldersUrl;
+import edu.upc.parserutils.dm.DmnFreelingUtils;
+import edu.upc.parserutils.dm.TypeRef_Table;
 
 import java.util.*;
 import java.util.Map.Entry;
@@ -51,7 +51,7 @@ public class Drd {
 		if (decisionTableList == null)
 			return "";
 
-		String dmnFileName = DmnFoldersUrl.INPUT_FOLDER + "/empty.dmn";
+		String dmnFileName = FoldersUrl.INPUT_FOLDER + "/empty.dmn";
 		String emptyXml = DmnFreelingUtils.readFile(dmnFileName);
 		InputStream targetStream = new ByteArrayInputStream(emptyXml.getBytes());
 		modelInstance = Dmn.readModelFromStream(targetStream);

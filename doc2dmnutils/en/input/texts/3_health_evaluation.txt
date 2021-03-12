@@ -1,0 +1,17 @@
+Health evaluation criteria consider both physical health score and mental health score of a patient.
+
+The physical health score is determined from the physical fitness score, BMI based health risk level and healthiness of senses.
+
+Physical fitness score is calculated from the sex of a patient and results of various tests such as strength test, coordination test, agility test, stamina test and speed test.
+
+The patient's risk level should be assessed by determining the obesity level based on BMI value, also on the waist circumference.
+
+The obesity level or degree of overweight should be assessed by determining the BMI value.
+
+If the weight of the patient is given in kgs and length of patient is given in meters, then the BMI value is weight/(length*length).
+
+The healthiness of senses is calculated from the results of eye and hearing tests.
+
+Health evaluation also depends on the score of Mental health, which is determined from the EQ test result and the IQ test score.
+
+An IQ of a patient is assessed from testing his verbal level, math level and abstract level.

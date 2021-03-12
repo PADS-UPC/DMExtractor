@@ -11,8 +11,8 @@ import java.util.Map.Entry;
 import edu.stanford.nlp.trees.Tree;
 import edu.upc.entities.Activity;
 import edu.upc.entities.Token;
-import edu.upc.freelingutils.FilesUrl;
-import edu.upc.freelingutils.FreelingUtils;
+import edu.upc.parserutils.FilesUrl;
+import edu.upc.parserutils.FreelingUtils;
 
 public class TreesHandler {
 	private LinkedHashMap<String, Token> tokens;

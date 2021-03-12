@@ -17,9 +17,9 @@ import edu.upc.entities.PredicateArgument;
 import edu.upc.entities.Token;
 import edu.upc.entities.dm.InputEntry_Rule;
 import edu.upc.entities.dm.Input_Dmn;
-import edu.upc.freelingutils.dm.DmnFilesUrl;
-import edu.upc.freelingutils.dm.DmnFreelingUtils;
-import edu.upc.freelingutils.dm.TypeRef_Table;
+import edu.upc.parserutils.dm.DmnFilesUrl;
+import edu.upc.parserutils.dm.DmnFreelingUtils;
+import edu.upc.parserutils.dm.TypeRef_Table;
 
 public class InputEntryHandler {
 	private LinkedHashMap<String, Activity> activitiesList;
@@ -90,8 +90,7 @@ public class InputEntryHandler {
 		return input;
 	}
 
-	private InputEntry_Rule getInputEntryFromAction(Tree tAction, Input_Dmn input, Tree tNegation)
-			throws IOException {
+	private InputEntry_Rule getInputEntryFromAction(Tree tAction, Input_Dmn input, Tree tNegation) throws IOException {
 		String resultActionToken = DmnFreelingUtils.getTokenFromNode(tAction.label().value());
 		Boolean negation = DmnFreelingUtils.isNegation(resultActionToken, trees);
 		if (tNegation != null)
@@ -125,10 +124,10 @@ public class InputEntryHandler {
 					if (!input.getName().toLowerCase().equals(agentName.toLowerCase())) {
 						if (isNumericVerb(resultActionToken)) {
 							patientName = functions.getEntryName(resultActionToken);
-						} else
-							patientName = functions.getEntryName(patient.getId()); // patient.getCompleteText().trim();
-																					// //
-																					// functions.getTextFromNode(patient.getId());
+						} else {
+							patientName = functions.getEntryName(patient.getId()); 
+							negation = DmnFreelingUtils.isNegation(patient.getId(), trees);
+						}
 						// if (input != null)
 						input.setTypeRef(functions.getType());
 						inputEntry = new InputEntry_Rule(patient.getId(), patientName, input, negation);
@@ -197,12 +196,25 @@ public class InputEntryHandler {
 			TregexMatcher matcher = pattern.matcher(tree);
 			while (matcher.findNextMatchingNode()) {
 				Tree tResultAction = matcher.getNode("resultAction");
+				Tree tResultNoun = matcher.getNode("resultNoun");
+				Tree tEntryNoun = matcher.getNode("entryNoun");
 				Input_Dmn input = null;
 				if (tResultAction != null) {
 					String resultActionToken = DmnFreelingUtils.getTokenFromNode(tResultAction.label().value());
 					InputEntry_Rule inputEntry_Rule = getInputEntryFromAction(tResultAction, input, tNegation);
 					inputEntryList.put(inputEntry_Rule.getId(), inputEntry_Rule);
 					inputEntryList.putAll(getInputEntryUnderAction(resultActionToken, tResultAction, tNegation));
+				} else if (tResultNoun != null && tEntryNoun != null) {
+					String resultNounToken = DmnFreelingUtils.getTokenFromNode(tResultNoun.label().value());
+					String resultEntryToken = DmnFreelingUtils.getTokenFromNode(tEntryNoun.label().value());
+					String inputName = tokens.get(resultNounToken).getLemma();
+					String entryName = functions.getEntryName(resultEntryToken);
+					input = new Input_Dmn(resultNounToken, inputName, inputName, TypeRef_Table.STRING);
+					InputEntry_Rule inputEntry = new InputEntry_Rule(resultEntryToken, entryName, input, false);
+					// LinkedHashMap<String, InputEntry_Rule> inputEntry_RuleList =
+					// getInputEntryFromNoun(resultNounToken, input, tNegation);
+					// inputEntryList.putAll(inputEntry_RuleList);
+					inputEntryList.put(inputEntry.getId(), inputEntry);
 				}
 			}
 		}

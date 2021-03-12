@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_0cc78j0" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.4.0">
+  <inputData id="InputData_0tavic8" name="Order" />
+  <inputData id="InputData_0lr68h8" name="Financial situation" />
+  <inputData id="InputData_1ml1oof" name="Score" />
+  <decision id="Decision_1e9iit8" name="Discount">
+    <informationRequirement id="InformationRequirement_0ixeg01">
+      <requiredInput href="#InputData_0tavic8" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_17bycdp">
+      <input id="InputClause_13lx4kg" label="Order">
+        <inputExpression id="LiteralExpression_0z7jyji" typeRef="integer">
+          <text>order</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_10il0dr" label="Discount" name="discount" typeRef="string" />
+      <rule id="DecisionRule_00rx2wq">
+        <inputEntry id="UnaryTests_1wehcwz">
+          <text>&gt;5</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_098z1tv">
+          <text>"5%"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0suvtrx">
+        <inputEntry id="UnaryTests_0rggy68">
+          <text>&gt;10</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1xvm8d4">
+          <text>"10%"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_0iqrka2" name="Risk rating">
+    <informationRequirement id="InformationRequirement_16rpl5h">
+      <requiredInput href="#InputData_0lr68h8" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1ehpg2i">
+      <input id="InputClause_1kgcl7t" label="Financial situation">
+        <inputExpression id="LiteralExpression_05mfbej" typeRef="string">
+          <text>financialsituation</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_0kwbdx4" label="Risk rating" name="riskrating" typeRef="string" />
+      <rule id="DecisionRule_1hlwr5d">
+        <inputEntry id="UnaryTests_1xvbg82">
+          <text>"good"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1om6ggy">
+          <text>"low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1qu766y">
+        <inputEntry id="UnaryTests_0icjslh">
+          <text>"moderate"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1pqdc89">
+          <text>"medium"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_0twg563" name="Service request">
+    <informationRequirement id="InformationRequirement_02h3lgj">
+      <requiredInput href="#InputData_1ml1oof" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0wtyfra">
+      <input id="InputClause_04eswr7" label="Score">
+        <inputExpression id="LiteralExpression_1hfybw2" typeRef="integer">
+          <text>score</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_177frxn" label="Service request" name="servicerequest" typeRef="string" />
+      <rule id="DecisionRule_0czyiat">
+        <inputEntry id="UnaryTests_10bghz3">
+          <text>10</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1iyw9m1">
+          <text>"product change"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0l4v02v">
+        <inputEntry id="UnaryTests_1uzjcb1">
+          <text>5</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1plt2g7">
+          <text>"bug"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_1sg7jlc" dmnElementRef="InputData_0tavic8">
+        <dc:Bounds height="45" width="125" x="367" y="257" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0fwhd0x" dmnElementRef="InformationRequirement_0ixeg01">
+        <di:waypoint x="430" y="257" />
+        <di:waypoint x="430" y="210" />
+        <di:waypoint x="430" y="190" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1ugr2oo" dmnElementRef="InputData_0lr68h8">
+        <dc:Bounds height="45" width="125" x="587" y="257" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1142d9k" dmnElementRef="InformationRequirement_16rpl5h">
+        <di:waypoint x="650" y="257" />
+        <di:waypoint x="650" y="210" />
+        <di:waypoint x="650" y="190" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_06eslo5" dmnElementRef="InputData_1ml1oof">
+        <dc:Bounds height="45" width="125" x="807" y="257" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0h45pb2" dmnElementRef="InformationRequirement_02h3lgj">
+        <di:waypoint x="870" y="257" />
+        <di:waypoint x="870" y="210" />
+        <di:waypoint x="870" y="190" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_113ed8v" dmnElementRef="Decision_1e9iit8">
+        <dc:Bounds height="80" width="180" x="340" y="110" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_06a0mvs" dmnElementRef="Decision_0iqrka2">
+        <dc:Bounds height="80" width="180" x="560" y="110" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1puq7c3" dmnElementRef="Decision_0twg563">
+        <dc:Bounds height="80" width="180" x="780" y="110" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

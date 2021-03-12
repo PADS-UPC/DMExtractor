@@ -13,9 +13,9 @@ import edu.upc.entities.Token;
 import edu.upc.entities.dm.Decision_Dmn;
 import edu.upc.entities.dm.DrgElement;
 import edu.upc.entities.dm.InputData_Dmn;
-import edu.upc.freelingutils.ActionType;
-import edu.upc.freelingutils.dm.DmnFilesUrl;
-import edu.upc.freelingutils.dm.DmnFreelingUtils;
+import edu.upc.parserutils.ActionType;
+import edu.upc.parserutils.dm.DmnFilesUrl;
+import edu.upc.parserutils.dm.DmnFreelingUtils;
 
 public class InputDataHandler {
 	private LinkedHashMap<String, Activity> activitiesList;

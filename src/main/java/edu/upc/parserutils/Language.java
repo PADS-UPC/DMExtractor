@@ -1,4 +1,4 @@
-package edu.upc.freelingutils;
+package edu.upc.parserutils;
 
 public enum Language {
 	LANG("en");

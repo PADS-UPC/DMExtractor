@@ -1,0 +1,12 @@
+If the order is above 5 units and the day is Tuesday, then a discount of 5% is given.
+
+A discount of 10% is given whenever the order exceeds 10 units and the customer number begins with 5.
+
+When the financial situation is good and the loan is less than 1000 euro, the applicant risk rating is low.
+
+The risk rating is medium if the financial situation is moderate and the loan exceeds 1100 euro.
+
+The service request is a product change if the score is 10 and the amount of hours needed is 9.
+
+In case that the score is 5 and the estimated work time is less than 5 hours, the service request is a bug.
+

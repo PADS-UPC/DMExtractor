@@ -1,0 +1,2 @@
+#/¦ACTION:.*¦/=toRemove >> /¦if¦|¦whether¦|¦can¦/=condition
+#/¦ACTION:.*¦/=toRemove >> /¦CONDITION:.*¦/

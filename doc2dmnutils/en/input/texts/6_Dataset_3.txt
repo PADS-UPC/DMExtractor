@@ -1,0 +1,20 @@
+Our service level agreement is very strict.
+
+This passage explains how much euros should be charged extra in certain events.
+
+The cost is defined by the service request and the customer's phase.
+
+Whenever the customer is in the testing phase and the customer's service request is a change request, the cost is 600 euros.
+
+If the customer is in the testing phase and the service request is a bug, then 0 euros should be charged to the cost.
+
+We wouldn't want to charge bugs.
+
+Further, if the service request is a change request and the phase is development, then 150 euros should be charged as cost.
+
+If the service request is a bug and the phase is testing however, the customer should be charged a cost of 0 euros.
+
+Finally, if the customer is in the maintenance phase and the service request is a change request, then the cost is 100.
+
+If the service request is a bug and the customer is in maintenance, then the cost should be 50 euros.
+

@@ -1,4 +1,4 @@
-package edu.upc.freelingutils;
+package edu.upc.parserutils;
 
 public enum ActionType {
 	EVENT("EVENT"), 

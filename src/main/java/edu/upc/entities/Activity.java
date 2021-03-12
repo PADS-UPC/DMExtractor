@@ -1,6 +1,6 @@
 package edu.upc.entities;
 
-import edu.upc.freelingutils.ActionType;
+import edu.upc.parserutils.ActionType;
 
 public class Activity {
 

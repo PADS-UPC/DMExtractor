@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_0bxxfvp" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.4.0">
+  <decision id="Decision_1mvr6qy" name="Prepayment">
+    <informationRequirement id="InformationRequirement_03yziiw">
+      <requiredInput href="#InputData_1y8k9jm" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0cureh4">
+      <requiredDecision href="#Decision_03b057p" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1m9y558">
+      <input id="Input_1" label="loyal customer">
+        <inputExpression id="InputExpression_1" typeRef="boolean">
+          <text>loyalcustomer</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1ge847a" label="OrderAmount">
+        <inputExpression id="LiteralExpression_0loomdf" typeRef="string">
+          <text>orderamount</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="Prepayment" name="prepayment" typeRef="boolean" />
+      <rule id="DecisionRule_0a5rmu8">
+        <inputEntry id="UnaryTests_0sws5uc">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1fgwa1c">
+          <text>"small"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0pmdvn7">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_1y8k9jm" name="OrderAmount" />
+  <inputData id="InputData_0eeauwi" name="AnnualSales" />
+  <inputData id="InputData_0jvkrd9" name="Customeryears" />
+  <decision id="Decision_03b057p" name="Loyal customer">
+    <informationRequirement id="InformationRequirement_1hi7nnd">
+      <requiredInput href="#InputData_0eeauwi" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1sxim0y">
+      <requiredInput href="#InputData_0jvkrd9" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1xh2bo4">
+      <input id="InputClause_17o6aaa" label="AnnualSales">
+        <inputExpression id="LiteralExpression_1cnpc2x" typeRef="string">
+          <text>annualsales</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_10me0rw" label="Customeryears">
+        <inputExpression id="LiteralExpression_0m1ddch" typeRef="double">
+          <text>customeryears</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_1ttfd4y" label="Loyal customer" name="loyalcustomer" typeRef="boolean" />
+      <rule id="DecisionRule_0dzlk8z">
+        <inputEntry id="UnaryTests_1bvxupk">
+          <text>"high"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1dfy8kd">
+          <text>&gt;5</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0uz3dv9">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_1mvr6qy">
+        <dc:Bounds height="80" width="180" x="290" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0unxf34" dmnElementRef="InputData_1y8k9jm">
+        <dc:Bounds height="45" width="125" x="447" y="227" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0h0jssg" dmnElementRef="InformationRequirement_03yziiw">
+        <di:waypoint x="510" y="227" />
+        <di:waypoint x="410" y="180" />
+        <di:waypoint x="410" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1jrzrze" dmnElementRef="InputData_0eeauwi">
+        <dc:Bounds height="45" width="125" x="177" y="347" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1j6zivx" dmnElementRef="InformationRequirement_1hi7nnd">
+        <di:waypoint x="240" y="347" />
+        <di:waypoint x="290" y="310" />
+        <di:waypoint x="290" y="290" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0sbdm6u" dmnElementRef="InputData_0jvkrd9">
+        <dc:Bounds height="45" width="125" x="317" y="347" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1xr03ne" dmnElementRef="InformationRequirement_1sxim0y">
+        <di:waypoint x="380" y="347" />
+        <di:waypoint x="350" y="310" />
+        <di:waypoint x="350" y="290" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_09guihg" dmnElementRef="InformationRequirement_0cureh4">
+        <di:waypoint x="320" y="210" />
+        <di:waypoint x="350" y="180" />
+        <di:waypoint x="350" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1n4d6vd" dmnElementRef="Decision_03b057p">
+        <dc:Bounds height="80" width="180" x="230" y="210" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

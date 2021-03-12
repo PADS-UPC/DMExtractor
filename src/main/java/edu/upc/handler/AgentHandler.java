@@ -13,8 +13,8 @@ import edu.upc.entities.Entity;
 import edu.upc.entities.Mention;
 import edu.upc.entities.Predicate;
 import edu.upc.entities.Token;
-import edu.upc.freelingutils.FilesUrl;
-import edu.upc.freelingutils.dm.DmnFreelingUtils;
+import edu.upc.parserutils.FilesUrl;
+import edu.upc.parserutils.dm.DmnFreelingUtils;
 
 public class AgentHandler {
 	private LinkedHashMap<String, Agent> agentList;

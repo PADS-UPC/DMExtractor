@@ -1,0 +1,5 @@
+If the client is loyal and with at least 5 years of longevity, he has a discount of 12%.
+
+If the client is loyal and with at less than 5 years of longevity, he has a 6% discount.
+
+If the client has no loyalty and he is at least 65 years old, he gets a 5% discount, and has a 3% discount if he is under 65.
